@@ -16,27 +16,60 @@ draait **niet** standalone — het leunt op de OCD-omgeving.
 
 ## Regenereren (zelfde locatie)
 ```bash
-python tools/build_data.py
+python tools/build_data.py     # regel-data (chips, artikelen, ⓘ-annotaties)
+python tools/build_geo.py      # + geo-blok voor de kaart-overlay (werkingsgebieden + perceel)
 ```
 Schrijft `data/broekhem33.json` én `data/broekhem33.js`. De pagina's lezen de `.js`.
+`build_geo.py` is een los script dat het bestaande JSON verrijkt met het `geo`-blok
+(werkingsgebied-contouren als SVG-paden + het kadastrale perceel via PDOK) en per artikel
+`geo_ids` toevoegt. Het raakt de chips/annotaties niet aan en heeft **geen Ollama** nodig —
+wél de DB en (voor het perceel) internet. Zie [de kaart-overlay hieronder](#kaart-overlay).
 
 ## Andere locatie
 1. Zoek de RD-coördinaat van het adres (PDOK Locatieserver:
    `https://api.pdok.nl/bzk/locatieserver/search/v3_1/free?q=<adres>&fq=type:adres`
    → veld `centroide_rd`).
 2. **Embed eerst** de regelingen op dat punt in `v2a` (embed-stap in de OCD-repo).
-3. Pas in `tools/build_data.py` bovenaan `X`, `Y`, `ADRES`, `GEMEENTE` aan.
-4. Vervang de kaart-luchtfoto (`img/broekhem-luchtfoto.jpg`) — zie onder.
-5. `python tools/build_data.py`.
+3. Pas in `tools/build_data.py` bovenaan `X`, `Y`, `ADRES`, `GEMEENTE` aan
+   (en `X`, `Y` óók in `tools/onderkaart_grijs.py` en `tools/build_geo.py`).
+4. Vervang de kaart-onderkaart (`img/broekhem-onderkaart-grijs.png`) — zie onder.
+5. `python tools/build_data.py` en daarna `python tools/build_geo.py`.
 
-### Kaart-luchtfoto vervangen
-PDOK luchtfoto-WMS, bbox ±170 m rond het punt:
+### Kaart-onderkaart vervangen
+De onderkaart is een grijze **PDOK BRT-achtergrondkaart** (style `grijs`), als één statisch
+plaatje samengesteld uit WMTS-tiles rond het punt. Genereer 'm met `tools/onderkaart_grijs.py`
+(haalt 3×4 tiles op zoom 12 ≈ 0,84 m/px op, gecentreerd op `X`,`Y`, en stitcht ze):
 ```
-https://service.pdok.nl/hwh/luchtfotorgb/wms/v1_0?service=WMS&request=GetMap
-  &version=1.3.0&layers=Actueel_orthoHR&crs=EPSG:28992
-  &bbox=<x-170>,<y-170>,<x+170>,<y+170>&width=800&height=800&format=image/jpeg
+# WMTS-tile-template (EPSG:28992-tilingschema, oorsprong -285401.92 / 903401.92):
+https://service.pdok.nl/brt/achtergrondkaart/wmts/v2_0/grijs/EPSG:28992/{z}/{col}/{row}.png
+#   col = floor((X + 285401.92) / (256*res[z])),  row = floor((903401.92 - Y) / (256*res[z]))
+#   res[12]=0.840  res[11]=1.680  res[10]=3.360  (m/px)
 ```
-Opslaan als `img/broekhem-luchtfoto.jpg` (of pas het pad in de CSS van de pagina's aan).
+Opslaan als `img/broekhem-onderkaart-grijs.png` (of pas het pad in de CSS van de pagina's aan).
+
+> **Echte BGT** i.p.v. BRT-grijs? De PDOK **BGT-WMS** (`service.pdok.nl/lv/bgt/…`) vereist
+> inmiddels een API-key (geeft anders `401`). BRT-achtergrondkaart `grijs` is key-vrij en geeft
+> dezelfde grijze look. Wil je écht BGT-detail, regel dan een PDOK-key.
+
+## Kaart-overlay
+
+De kaart is géén interactieve tegelkaart maar de **statische grijze onderkaart** met een
+**SVG-overlay** eroverheen. Dat kan omdat het plaatje een exact bekende bbox heeft
+(`tools/onderkaart_grijs.py` en `tools/build_geo.py` gebruiken hetzelfde EPSG:28992-frame),
+dus vectorcontouren vallen er pixel-precies op — zónder Leaflet en zónder tiles op runtime.
+
+`tools/build_geo.py` schrijft het `geo`-blok:
+- **werkingsgebieden** — per regeling de gebiedsaanwijzingen (`gebiedsaanwijzing.locatie_id`
+  → `p2p.locatie_subdiv.geometrie`), geclipt op het kaartbeeld, RD → pixel geprojecteerd
+  (PostGIS `ST_Affine`), vereenvoudigd en als SVG-pad (`d`) opgeslagen. `dekt_beeld=true`
+  markeert provinciebrede zones die het hele beeld vullen (die worden alleen als rand getoond,
+  geen kleurwaas). De `type` bepaalt de kleur (zelfde palet als de ⓘ-gebiedsaanwijzingen).
+- **perceel** — het kadastrale perceel via PDOK Kadastrale Kaart WFS, als rode stippellijn.
+- **koppeling** — elk artikel krijgt `geo_ids` via de regeltekst-`wid`; daardoor licht bij
+  hover/klik op een artikel (◈) het bijbehorende werkingsgebied op.
+
+Let op: het **Omgevingsplan Valkenburg** heeft 0 gebiedsaanwijzingen (zie onder), dus de
+oplichtende werkingsgebieden komen van de **Omgevingsverordening** en **Waterschapsverordening**.
 
 ## Thema's tunen
 De taxonomie is de `THEMAS`-lijst in `build_data.py`: `(id, naam, kleur, zaad-omschrijving)`.

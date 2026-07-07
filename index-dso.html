@@ -21,9 +21,20 @@
   @media(max-width:900px){.grid{grid-template-columns:1fr}.side{display:none}}
   .panel{padding:20px 24px;overflow:auto}
   h1{font-size:24px;color:#39870c;margin:0 0 12px}
-  .side{border-left:1px solid #e2e2e2;position:relative;overflow:hidden;background:#e9ebe6 url('./img/broekhem-luchtfoto.jpg') center/cover no-repeat}
-  .marker{position:absolute;top:50%;left:50%;width:16px;height:16px;transform:translate(-50%,-50%);background:#7a2e6b;border:3px solid #fff;border-radius:50%;box-shadow:0 1px 4px rgba(0,0,0,.4)}
-  .pin{position:absolute;top:50%;left:50%;transform:translate(-50%,-140%);background:#fff;border:1px solid #ccc;border-radius:5px;padding:4px 10px;font-size:13px;color:#7a2e6b;box-shadow:0 1px 4px rgba(0,0,0,.3);white-space:nowrap}
+  .side{border-left:1px solid #e2e2e2;position:relative;overflow:hidden;background:#eef0ec}
+  .mapsvg{position:absolute;inset:0;width:100%;height:100%;display:block}
+  .geo{fill:#7a2e6b;fill-opacity:.05;stroke:#7a2e6b;stroke-opacity:.35;stroke-width:1.4;
+       vector-effect:non-scaling-stroke;transition:fill-opacity .12s,stroke-opacity .12s;cursor:pointer}
+  .geo.hot{fill-opacity:.28;stroke-opacity:1;stroke-width:2.4}
+  .geo.dekt{fill:none!important} .geo.dekt.hot{stroke-width:3}
+  .geo.perceel{fill:none;stroke:#b0392f;stroke-opacity:.9;stroke-width:2;stroke-dasharray:5 3}
+  .geo.perceel.hot{stroke-width:3;stroke-dasharray:none}
+  .mk{fill:#7a2e6b;stroke:#fff;stroke-width:2}
+  .maplabel{position:absolute;left:10px;bottom:10px;right:10px;background:rgba(255,255,255,.92);
+       border:1px solid #e2e2e2;border-radius:6px;padding:7px 10px;font-size:12px;color:#5b6b52;box-shadow:0 1px 4px rgba(0,0,0,.12)}
+  .maplabel b{color:#7a2e6b}
+  .art.geohot{background:#faf6fb}
+  .geo-ind{color:#7a2e6b;font-size:12px;margin-left:2px;flex:0 0 auto;opacity:.75}
   .doc{border:1px solid #e2e2e2;border-radius:4px;margin-bottom:12px;background:#fff}
   .doc>.dhead{display:flex;align-items:flex-start;gap:10px;padding:14px 16px;cursor:pointer}
   .doc .titel{font-size:17px;color:#39870c;font-weight:600}
@@ -65,11 +76,57 @@
     <div id="docs"></div>
     <div class="legenda" id="legenda"></div>
   </div>
-  <div class="side"><div class="marker"></div><div class="pin" id="map-pin">…</div><div class="drawer" id="drawer"></div></div>
+  <div class="side">
+    <svg class="mapsvg" id="mapsvg" preserveAspectRatio="xMidYMid slice">
+      <image id="map-img" x="0" y="0"/><g id="geo-layer"></g><g id="marker"></g>
+    </svg>
+    <div class="maplabel" id="maplabel"></div>
+    <div class="drawer" id="drawer"></div>
+  </div>
 </div>
 <script src="./data/broekhem33.js"></script>
 <script>
 const KLEUR={},NAAM={};
+const FUNCTIE_KLEUR={'functie':'#EAC63B','ruimtelijk gebruik':'#C9A227','natuur':'#6FA83C','water en watersysteem':'#2E7BC4','landschap':'#8Fae5b','erfgoed':'#7D5BA6','verkeer':'#4A4A4A','geluid':'#5CBFB0','bodem':'#8C6B3F','beperkingengebied':'#D64545','energievoorziening':'#A03A6B','defensie':'#777'};
+const SVGNS="http://www.w3.org/2000/svg";
+const FEAT={};
+const featColor=f=>f.laag==='perceel'?'#b0392f':(FUNCTIE_KLEUR[f.type]||'#7a2e6b');
+function setLabelHint(){const ml=document.getElementById('maplabel');if(ml)ml.innerHTML='<b>Kaart.</b> Beweeg over een artikel om zijn werkingsgebied te laten oplichten. Rode stippellijn = het perceel.';}
+function clearHi(){document.querySelectorAll('#geo-layer .hot').forEach(p=>p.classList.remove('hot'));document.querySelectorAll('.art.geohot').forEach(a=>a.classList.remove('geohot'));setLabelHint();}
+function highlight(fids){
+  document.querySelectorAll('#geo-layer .hot').forEach(p=>p.classList.remove('hot'));
+  const names=[];(fids||[]).forEach(id=>{const p=document.querySelector(`#geo-layer [data-id="${id}"]`);
+    if(p){p.classList.add('hot');p.parentNode.appendChild(p);const f=FEAT[id];if(f)names.push(f.naam);}});
+  const ml=document.getElementById('maplabel');
+  if(ml)ml.innerHTML=names.length?('<b>Werkingsgebied'+(names.length>1?'en':'')+':</b> '+names.join(' · ')):
+    'Voor dit artikel is geen apart werkingsgebied in beeld.';
+}
+function initGeo(geo){
+  const svg=document.getElementById('mapsvg');if(!svg)return;
+  if(!geo||!geo.features){svg.style.display='none';return;}
+  svg.setAttribute('viewBox',`0 0 ${geo.size[0]} ${geo.size[1]}`);
+  const img=document.getElementById('map-img');
+  img.setAttribute('href',geo.afbeelding);img.setAttributeNS('http://www.w3.org/1999/xlink','href',geo.afbeelding);
+  img.setAttribute('width',geo.size[0]);img.setAttribute('height',geo.size[1]);
+  const layer=document.getElementById('geo-layer');
+  geo.features.forEach(f=>{FEAT[f.id]=f;
+    const p=document.createElementNS(SVGNS,'path');
+    p.setAttribute('d',f.d);p.dataset.id=f.id;
+    p.setAttribute('class','geo'+(f.laag==='perceel'?' perceel':'')+(f.dekt_beeld?' dekt':''));
+    if(f.laag!=='perceel'){p.style.fill=featColor(f);p.style.stroke=featColor(f);}
+    p.addEventListener('mouseenter',()=>{p.classList.add('hot');p.parentNode.appendChild(p);
+      const ml=document.getElementById('maplabel');
+      if(ml)ml.innerHTML=(f.laag==='perceel'?'<b>Perceel:</b> ':'<b>'+(f.type||'')+':</b> ')+f.naam;
+      document.querySelectorAll('.art').forEach(a=>{if((a.dataset.geo||'').split(' ').includes(f.id))a.classList.add('geohot');});});
+    p.addEventListener('mouseleave',clearHi);
+    layer.appendChild(p);
+  });
+  const m=document.getElementById('marker');
+  const c=document.createElementNS(SVGNS,'circle');
+  c.setAttribute('cx',geo.punt[0]);c.setAttribute('cy',geo.punt[1]);c.setAttribute('r',8);c.setAttribute('class','mk');
+  m.appendChild(c);
+  setLabelHint();
+}
 function chip(t){
   const el=document.createElement('span');el.className='chip';
   el.innerHTML=`<dso-label compact="true"><span class="dot" style="background:${KLEUR[t.id]||'#bbb'}"></span>${NAAM[t.id]||t.id} ${t.aantal}</dso-label>`;
@@ -116,14 +173,22 @@ function renderDoc(doc){
     const k=document.createElement('div');k.className='hoofdstuk';k.textContent=h.titel;body.appendChild(k);
     h.artikelen.forEach(a=>{
       const art=document.createElement('div');art.className='art';art.dataset.thema=a.thema;
+      const hasGeo=a.geo_ids&&a.geo_ids.length;
+      const k=a.kenmerken||{};
+      const hasKenmerken=(k.functies&&k.functies.length)||(k.normen&&k.normen.length);
+      if(hasGeo)art.dataset.geo=a.geo_ids.join(' ');
       const leden=a.leden.map(l=>`<div class="lid"><span class="nr">${l.nummer||''}</span><span>${(l.tekst||'').trim()}</span></div>`).join('');
       art.innerHTML=`<div class="arow"><span class="tw"><span class="achev">›</span>
         <span class="dot" style="background:${KLEUR[a.thema]||'#bbb'}"></span>
-        <span class="atitel">Artikel ${a.nummer||''}${a.opschrift?' '+a.opschrift:''}</span></span>
-        <dso-info-button aria-label="Kenmerken"></dso-info-button></div>
+        <span class="atitel">Artikel ${a.nummer||''}${a.opschrift?' '+a.opschrift:''}</span>
+        ${hasGeo?'<span class="geo-ind" title="Werkingsgebied op de kaart">◈</span>':''}</span>
+        ${hasKenmerken?'<dso-info-button aria-label="Kenmerken"></dso-info-button>':''}</div>
         <div class="leden">${leden}</div>`;
-      art.querySelector('.tw').onclick=()=>art.classList.toggle('open');
-      art.querySelector('dso-info-button').addEventListener('click',()=>openDrawer(a));
+      const tw=art.querySelector('.tw');
+      tw.onclick=()=>art.classList.toggle('open');
+      if(hasGeo){tw.addEventListener('mouseenter',()=>highlight(a.geo_ids));tw.addEventListener('mouseleave',clearHi);}
+      const info=art.querySelector('dso-info-button');
+      if(info)info.addEventListener('click',()=>openDrawer(a));
       body.appendChild(art);
     });
   });
@@ -134,8 +199,8 @@ function renderDoc(doc){
   if(!d){document.body.insertAdjacentHTML('beforeend','<div class="err">Data niet geladen.</div>');return;}
   d.themas.forEach(t=>{KLEUR[t.id]=t.kleur;NAAM[t.id]=t.naam;});
   document.getElementById('loc-adres').textContent=d.locatie.adres;
-  document.getElementById('map-pin').textContent=d.locatie.adres;
   const host=document.getElementById('docs');d.documenten.forEach(doc=>host.appendChild(renderDoc(doc)));
+  initGeo(d.geo);
   document.getElementById('legenda').innerHTML='<b>Thema-legenda:</b><br>'+d.themas.map(t=>`<span><span class="dot" style="background:${t.kleur}"></span>${t.naam}</span>`).join('');
   if(new URLSearchParams(location.search).get('open')){
     const ci=d.documenten.findIndex(x=>x.hoofdstukken.some(h=>h.artikelen.some(a=>a.kenmerken.functies.length||a.kenmerken.normen.length)));

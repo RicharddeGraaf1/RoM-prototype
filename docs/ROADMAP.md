@@ -1,8 +1,9 @@
 # Roadmap / vervolgstappen
 
 De PoC dekt: browse per thema, geneste artikelstructuur, ⓘ-paneel met echte
-IMOW-annotaties (eerlijk waar leeg), twee schil-varianten, echte luchtfoto. Wat er nog
-kan, ongeveer op volgorde van waarde/inspanning:
+IMOW-annotaties (eerlijk waar leeg), twee schil-varianten, en een **grijze onderkaart met
+oplichtende werkingsgebied-contouren** (SVG-overlay, offline; zie [DATA.md](DATA.md#kaart-overlay)).
+Wat er nog kan, ongeveer op volgorde van waarde/inspanning:
 
 ## Dicht bij de mockups
 1. **Sectie "Mogelijke beperkingen"** (externe veiligheid, geluidsaandachtgebieden).
@@ -23,8 +24,10 @@ kan, ongeveer op volgorde van waarde/inspanning:
    locatie/het punt voor de echte "op gekozen locatie: … m"-waarde uit de mockup.
 
 ## Techniek
-7. **Echte interactieve kaart** i.p.v. luchtfoto-placeholder: perceel-contour + de
-   werkingsgebieden van geselecteerde regels (Leaflet + PDOK-tiles, of `dso-map`).
+7. **Echte interactieve kaart** (pan/zoom) i.p.v. de statische onderkaart + SVG-overlay:
+   Leaflet + PDOK-tiles of `dso-map`. De huidige overlay toont het perceel + de werkingsgebieden
+   van een artikel al statisch (`build_geo.py`); een tegelkaart voegt pan/zoom, klik-op-kaart →
+   regels, en meerlaagse achtergronden toe. Vergt runtime-internet (of gevendorde tiles).
 8. **DSO-variant offline** — CDN-assets vendoren (zie [DSO-TOOLKIT.md](DSO-TOOLKIT.md#offline-maken-optioneel)).
 9. **Volwaardige DSO-componenten** (`dso-document-component`, `dso-annotation-*`): de
    officiële viewer-bouwstenen. Grotere stap — vergt de exacte property-datastructuren
@@ -35,4 +38,5 @@ kan, ongeveer op volgorde van waarde/inspanning:
 
 ## Andere locaties
 Zie [DATA.md](DATA.md#andere-locatie). Kort: RD-coördinaat opzoeken → embed-stap in OCD →
-`X/Y/ADRES` in `build_data.py` → luchtfoto vervangen → regenereren.
+`X/Y/ADRES` in `build_data.py`/`onderkaart_grijs.py`/`build_geo.py` → onderkaart vervangen →
+`build_data.py` + `build_geo.py` draaien.

@@ -4995,6 +4995,13 @@
          "tekst": "De motivering bij een omgevingsplan bevat: a. een verantwoording van de wijze waarop invulling is gegeven aan het eerste, tweede of derde lid; b. een beschrijving van het proces van voorbereiding van het initiatief, de planvoorbereiding en, wanneer dat aan de orde is, de verantwoording van de afstemming in (sub-)regionaal verband.",
          "wid": "pv31_ba7f500987a64164a60d283c147c4b26__chp_12__subchp_12.1__subsec_12.1.2__art_12.3__para_4"
         }
+       ],
+       "geo_ids": [
+        "om-natuurnetwerk-limburg",
+        "om-buitengebied",
+        "om-groenblauwe-mantel",
+        "om-bedrijventerreinen",
+        "om-landelijke-kernen"
        ]
       },
       {
@@ -5074,6 +5081,10 @@
          "tekst": "De motivering bij het omgevingsplan bevat een verantwoording van de wijze waarop invulling is gegeven aan het bepaalde in het eerste lid.",
          "wid": "pv31_584a71835f2a439a9ee15476e29c44a0__chp_12__subchp_12.1__subsec_12.1.6__art_12.9__para_2"
         }
+       ],
+       "geo_ids": [
+        "om-bedrijventerreinen",
+        "om-landelijke-kernen"
        ]
       },
       {
@@ -5132,6 +5143,13 @@
          "tekst": "De motivering bij een omgevingsplan bevat: a. een verantwoording van de wijze waarop invulling is gegeven aan het eerste, tweede of derde lid; b. een beschrijving van het proces van voorbereiding van het initiatief, de planvoorbereiding en, wanneer dat aan de orde is, de verantwoording van de afstemming in (sub-)regionaal verband.",
          "wid": "pv31_dd2ab0f9c2594493bf523b1f7c674ffa__chp_12__subchp_12.1__subsec_12.1.5__art_12.6__para_4"
         }
+       ],
+       "geo_ids": [
+        "om-natuurnetwerk-limburg",
+        "om-buitengebied",
+        "om-groenblauwe-mantel",
+        "om-bedrijventerreinen",
+        "om-landelijke-kernen"
        ]
       },
       {
@@ -5195,6 +5213,13 @@
          "tekst": "De motivering bij een omgevingsplan bevat: a. een verantwoording van de wijze waarop invulling is gegeven aan het eerste, tweede of derde lid en aan het vierde lid; en b. een beschrijving van het proces van voorbereiding van het initiatief, de planvoorbereiding en, wanneer dat aan de orde is, de verantwoording van de afstemming in (sub-)regionaal verband.",
          "wid": "pv31_304c7e121bde4237a6f96cb14042695c__chp_12__subchp_12.1__subsec_12.1.4__art_12.5__para_5"
         }
+       ],
+       "geo_ids": [
+        "om-natuurnetwerk-limburg",
+        "om-buitengebied",
+        "om-groenblauwe-mantel",
+        "om-bedrijventerreinen",
+        "om-landelijke-kernen"
        ]
       },
       {
@@ -5253,6 +5278,13 @@
          "tekst": "De motivering bij een omgevingsplan bevat: a. een verantwoording van de wijze waarop invulling is gegeven aan het eerste, tweede of derde lid; b. een beschrijving van het proces van voorbereiding van het initiatief, de planvoorbereiding en, wanneer dat aan de orde is, de verantwoording van de afstemming in (sub-)regionaal verband.",
          "wid": "pv31_6334d099182347fabc43b9109177857a__chp_12__subchp_12.1__subsec_12.1.3__art_12.4__para_4"
         }
+       ],
+       "geo_ids": [
+        "om-natuurnetwerk-limburg",
+        "om-buitengebied",
+        "om-groenblauwe-mantel",
+        "om-bedrijventerreinen",
+        "om-landelijke-kernen"
        ]
       }
      ]
@@ -6921,6 +6953,10 @@
          "tekst": "Het verbod, bedoeld in het tweede lid, geldt niet voor het uitvoeren van ontwateringswerkzaamheden in een bron of bronzone , als de werkzaamheden worden uitgevoerd voor herstel en onderhoud van de bron of bronzone.",
          "wid": "pv31_8613a50ec7664bd2afbaca1c1881aad0__chp_7__subchp_7.2__art_7.4__para_6"
         }
+       ],
+       "geo_ids": [
+        "om-beekdal-in-beschermingsgebied-nationaal-",
+        "om-beschermingsgebied-nationaal-landschap-z"
        ]
       },
       {
@@ -6958,6 +6994,10 @@
          "tekst": "Deze afdeling is niet van toepassing op het aanleggen van een boorput in een beekdal.",
          "wid": "pv31_34537fffdc2840e1b45c2cf008dbc38a__chp_7__subchp_7.2__art_7.3__para_3"
         }
+       ],
+       "geo_ids": [
+        "om-beekdal-in-beschermingsgebied-nationaal-",
+        "om-beschermingsgebied-nationaal-landschap-z"
        ]
       }
      ]
@@ -7060,6 +7100,10 @@
          "tekst": "Een omgevingsplan laat een uitbreiding van het bouwvlak voor een glastuinbouwbedrijf toe in het uitzonderingsgebied uitbreiding glastuinbouw onder de voorwaarde dat: a. er sprake is van een toekomstbestendige locatie; b. bij uitbreidingen er voor iedere 1 m² netto uitbreiding glastuinbouw 2 m² netto glastuinbouw gelegen buiten een ontwikkelingsgebied glastuinbouw wordt gesloopt.",
          "wid": "pv31_37fb4ca91bf144b8843edcd9c1966235__chp_10__subchp_10.1__subsec_10.1.3__art_10.6__para_3"
         }
+       ],
+       "geo_ids": [
+        "om-buitengebied",
+        "om-uitzonderingsgebied-uitbreiding-glastuin"
        ]
       },
       {
@@ -7156,6 +7200,10 @@
          "tekst": "Het eerste lid is niet van toepassing op nieuwvestiging in de vorm van agglomeratielandbouw op bedrijventerreinen of in een ontwikkelingsgebied glastuinbouw .",
          "wid": "pv31_733a66fca07241e89a37ddad7a7a1f28__chp_10__subchp_10.1__subsec_10.1.1__art_10.1__para_3"
         }
+       ],
+       "geo_ids": [
+        "om-natuurnetwerk-limburg",
+        "om-bedrijventerreinen"
        ]
       }
      ]
@@ -7264,6 +7312,9 @@
          "tekst": "De kernkwaliteiten van het beschermingsgebied Nationaal Landschap Zuid-Limburg zijn nader uitgewerkt in bijlage VII .",
          "wid": "pv31_b047c8ec83d545f59ff8d73832a9ae2d__chp_7__subchp_7.1__art_7.1__para_2"
         }
+       ],
+       "geo_ids": [
+        "om-beschermingsgebied-nationaal-landschap-z"
        ]
       },
       {
@@ -7292,6 +7343,9 @@
          "tekst": "Bij de compensatie van de negatieve effecten op het groene karakter wordt bijlage VII gevolgd.",
          "wid": "pv31_3f5ad8efd4d746c091da523b6a612c7f__chp_7__subchp_7.1__art_7.2__para_2"
         }
+       ],
+       "geo_ids": [
+        "om-beschermingsgebied-nationaal-landschap-z"
        ]
       }
      ]
@@ -7586,6 +7640,10 @@
          "tekst": "De kernkwaliteiten in de groenblauwe mantel zijn nader uitgewerkt in bijlage VIII .",
          "wid": "pv31_424ddcd2f1c64b3c95c722b43dcaa253__chp_7__subchp_7.3__art_7.5__para_2"
         }
+       ],
+       "geo_ids": [
+        "om-beekdal",
+        "om-groenblauwe-mantel"
        ]
       }
      ]
@@ -7661,6 +7719,9 @@
          "tekst": "De motivering bij een omgevingsplan bevat een onderbouwing waaruit blijkt dat aan de voorwaarden uit lid 1 is voldaan.",
          "wid": "pv31_2cb716655417405187f8b73f3a3af115__chp_8__subchp_8.1__subsec_8.1.2__art_8.2__para_2"
         }
+       ],
+       "geo_ids": [
+        "om-natuurnetwerk-limburg"
        ]
       },
       {
@@ -7689,6 +7750,9 @@
          "tekst": "Toepassing van de saldobenadering, bedoeld in het eerste lid, vindt alleen plaats als: a. de combinatie van plannen, projecten of handelingen binnen één samenhangende gebiedsvisie wordt gepresenteerd; b. per saldo sprake is van verbetering van de natuurwaarden in en rond het gebied, waarbij de samenhang van het Natuurnetwerk Limburg verbetert; c. ten aanzien van de te nemen maatregelen ter verbetering van de natuurwaarden in de gebiedsvisie wordt aangegeven: 1°. de aard, omvang, locaties en tijdvak van realisatie van deze maatregelen; 2°. op welke wijze deze maatregelen feitelijk en planologisch duurzaam worden geborgd; a. de uitvoering van deze visie voldoende is gegarandeerd; b. de kwaliteitswinst niet wordt gefinancierd uit reguliere middelen voor realisatie van het Natuurnetwerk Limburg .",
          "wid": "pv31_3c91bc52732e4a3b9926752d40decca0__chp_8__subchp_8.1__subsec_8.1.2__art_8.5__para_2"
         }
+       ],
+       "geo_ids": [
+        "om-natuurnetwerk-limburg"
        ]
       },
       {
@@ -7717,6 +7781,9 @@
          "tekst": "Toepassing van het eerste lid vindt alleen plaats als uit het omgevingsplan blijkt dat: a. de voorgestelde ingreep slechts leidt tot een beperkte aantasting van de wezenlijke kenmerken en waarden en samenhang van het Natuurnetwerk Limburg in dat gebied; b. de voorgestelde ingreep leidt tot een kwalitatieve versterking van het Natuurnetwerk Limburg; c. de oppervlakte natuur van het Natuurnetwerk Limburg ten minste gelijk blijft; d. de kwaliteitswinst niet wordt gefinancierd uit reguliere middelen voor realisatie van het Natuurnetwerk Limburg.",
          "wid": "pv31_f4dec53921f84919b3244536dbbc735e__chp_8__subchp_8.1__subsec_8.1.2__art_8.6__para_2"
         }
+       ],
+       "geo_ids": [
+        "om-natuurnetwerk-limburg"
        ]
       }
      ]
@@ -7800,6 +7867,11 @@
          "tekst": "Het waterschap voldoet uiterlijk in 2035 aan de inspanningsverplichtingen bedoeld in het zevende lid.",
          "wid": "pv31_8ccba70355cd4123ac3ca93cd6a2f629__chp_3__subchp_3.1__art_3.1__para_8"
         }
+       ],
+       "geo_ids": [
+        "om-overstromingskansgebied-a",
+        "om-overstromingskansgebied-b",
+        "om-overstromingskansgebied-c"
        ]
       }
      ]
@@ -8265,6 +8337,9 @@
          "tekst": "Het eerste tot en met het derde lid gelden totdat voor het gebied een onherroepelijk omgevingsplan in overeenstemming met  artikel 16.1  is vastgesteld.",
          "wid": "pv31_d14608e18dce4969b1f640945189b291__chp_16__subchp_16.2__art_16.2__para_4"
         }
+       ],
+       "geo_ids": [
+        "om-beschermingsgebied-einstein-telescope"
        ]
       }
      ]
@@ -8308,6 +8383,9 @@
          "tekst": "Het bevoegd gezag kan zich bij haar beslissing op een vergunningaanvraag als bedoeld in het tweede lid laten adviseren door een of meer deskundigen.",
          "wid": "pv31_93e4431fa9bf4993b092d1582e5f09a9__chp_16__subchp_16.1__art_16.1__para_4"
         }
+       ],
+       "geo_ids": [
+        "om-beschermingsgebied-einstein-telescope"
        ]
       }
      ]
@@ -8412,6 +8490,10 @@
          "tekst": "Het eerste lid geldt niet voor een  zonnepark  op de locatie van de stortplaats in Schinnen (gemeente Beekdaelen), als bedoeld in  artikel 5.1 , onder c.",
          "wid": "pv31_f1e19e8316b84fb6a6e32a0eb0bbda2e__chp_13__subchp_13.2__art_13.3__para_6"
         }
+       ],
+       "geo_ids": [
+        "om-natuurnetwerk-limburg",
+        "om-groenblauwe-mantel"
        ]
       }
      ]
@@ -9632,6 +9714,10 @@
          "tekst": "Indien de kabel of leiding definitief buiten gebruik is gesteld, dient het bestuur hiervan binnen 10 werkdagen te worden geïnformeerd.",
          "wid": "ws0665_2__chp_2__subchp_2.1__subsec_2.1.6__art_2.26__para_7"
         }
+       ],
+       "geo_ids": [
+        "wa-meanderzone",
+        "wa-inundatiegebied"
        ]
       },
       {
@@ -9725,6 +9811,10 @@
          "tekst": "Bomen en struiken vormen geen belemmering voor het functioneren van het  Inundatiegebied .",
          "wid": "ws0665_2__chp_2__subchp_2.1__subsec_2.1.8__art_2.46__para_3"
         }
+       ],
+       "geo_ids": [
+        "wa-meanderzone",
+        "wa-inundatiegebied"
        ]
       },
       {
@@ -9814,6 +9904,9 @@
          "tekst": "Ten minste tien werkdagen voordat een kabel of leiding definitief buiten gebruik is gesteld, worden gegevens en bescheiden hierover verstrekt aan het bevoegd gezag.",
          "wid": "ws0665_2__chp_2__subchp_2.1__subsec_2.1.6__art_2.30__para_2"
         }
+       ],
+       "geo_ids": [
+        "wa-meanderzone"
        ]
       },
       {
@@ -10050,6 +10143,10 @@
          "tekst": "Ten minste tien werkdagen voordat de activiteit op een andere manier wordt verricht dan overeenkomstig die gegevens, wordt een melding gedaan.",
          "wid": "ws0665_2__chp_2__subchp_2.1__subsec_2.1.6__art_2.31__para_2"
         }
+       ],
+       "geo_ids": [
+        "wa-meanderzone",
+        "wa-inundatiegebied"
        ]
       },
       {
@@ -10083,6 +10180,9 @@
          "tekst": "Ook bij het leggen van een kabel of leiding in een meanderzone, wordt voldaan aan de artikelen  2.27  tot en met  2.30 .",
          "wid": "ws0665_2__chp_2__subchp_2.1__subsec_2.1.6__art_2.25__para_3"
         }
+       ],
+       "geo_ids": [
+        "wa-meanderzone"
        ]
       },
       {
@@ -10125,6 +10225,10 @@
          "tekst": "Het is verboden zonder vergunning een bouwwerk aan te leggen in een inundatiegebied.",
          "wid": "ws0665_2__chp_2__subchp_2.1__subsec_2.1.5__art_2.22__para_4"
         }
+       ],
+       "geo_ids": [
+        "wa-meanderzone",
+        "wa-inundatiegebied"
        ]
       },
       {
@@ -10254,6 +10358,10 @@
          "tekst": "Deze paragraaf is niet van toepassing op: a. het aanleggen, hebben of wijzigen van een klein bouwwerk als bedoeld in artikel  2.49 ; en b. het plaatsen of verwijderen van een hekwerk of schutting als bedoeld in artikel  2.52 .",
          "wid": "ws0665_2__chp_2__subchp_2.1__subsec_2.1.5__art_2.20__para_2"
         }
+       ],
+       "geo_ids": [
+        "wa-inundatiegebied",
+        "wa-meanderzone"
        ]
       },
       {
@@ -10375,6 +10483,10 @@
          "tekst": "Ook bij het aanbrengen van een boom of struik in het profiel van vrije ruimte, een meanderzone of een inundatiegebied, wordt voldaan aan artikel  2.47 .",
          "wid": "ws0665_2__chp_2__subchp_2.1__subsec_2.1.8__art_2.45__para_2"
         }
+       ],
+       "geo_ids": [
+        "wa-inundatiegebied",
+        "wa-meanderzone"
        ]
       }
      ]
@@ -12774,5 +12886,184 @@
     }
    ]
   }
- ]
+ ],
+ "geo": {
+  "bbox_rd": [
+   185535.68,
+   319783.36,
+   186180.8,
+   320643.52
+  ],
+  "size": [
+   768,
+   1024
+  ],
+  "afbeelding": "./img/broekhem-onderkaart-grijs.png",
+  "punt": [
+   438.5,
+   653.0
+  ],
+  "features": [
+   {
+    "id": "om-natuurbeek",
+    "laag": "werkingsgebied",
+    "type": "water en watersysteem",
+    "naam": "natuurbeek",
+    "documenttype": "Omgevingsverordening",
+    "dekt_beeld": false,
+    "d": "M614.8,1020.3L661.8,971.4L676.7,953.7L679.8,944.1L700.1,922.1L700.1,894.6L725.5,878.9L746.9,853.3L755.1,816.2L768,801.4L768,810.4L760.6,818.7L752.2,856.2L729.3,883.5L705.7,897.7L705.5,924.9L684.8,947.4L681.8,956.9L662.9,979.0L619.5,1024L611.1,1024L614.8,1020.3Z"
+   },
+   {
+    "id": "om-natuurnetwerk-limburg",
+    "laag": "werkingsgebied",
+    "type": "natuur",
+    "naam": "Natuurnetwerk Limburg",
+    "documenttype": "Omgevingsverordening",
+    "dekt_beeld": false,
+    "d": "M0,968.8L48.1,1007.3L70.5,1022.5L86.6,979.1L140.3,1004.1L140.4,1005.9L130.9,1024L0,1024L0,968.8Z"
+   },
+   {
+    "id": "om-beekdal",
+    "laag": "werkingsgebied",
+    "type": "landschap",
+    "naam": "beekdal",
+    "documenttype": "Omgevingsverordening",
+    "dekt_beeld": false,
+    "d": "M0,936.5L35.4,949.9L76.6,971.6L54.3,1024L0,1024L0,936.5Z"
+   },
+   {
+    "id": "om-beekdal-in-beschermingsgebied-nationaal-",
+    "laag": "werkingsgebied",
+    "type": "landschap",
+    "naam": "beekdal in beschermingsgebied Nationaal Landschap Zuid-Limburg",
+    "documenttype": "Omgevingsverordening",
+    "dekt_beeld": false,
+    "d": "M0,936.5L35.4,949.9L76.6,971.6L54.3,1024L0,1024L0,936.5Z"
+   },
+   {
+    "id": "om-buitengebied",
+    "laag": "werkingsgebied",
+    "type": "ruimtelijk gebruik",
+    "naam": "buitengebied",
+    "documenttype": "Omgevingsverordening",
+    "dekt_beeld": false,
+    "d": "M0,32.3L22.9,26.0L56.0,20.1L84.4,12.4L111.8,-0.0L121.3,-0.0L11.9,37.6L0,40.1L0,32.3ZM159.9,-0.0L194.2,34.7L221.5,35.2L267.4,27.9L273.3,52.0L275.1,70.0L261.1,43.8L235.1,44.7L207.3,48.8L191.9,46.7L162.0,20.9L128.2,-0.0L159.9,-0.0ZM137.9,1010.7L140.3,1004.0L157.2,1008.2L193.4,1024L130.9,1024L137.9,1010.7ZM338.6,75.1L348.5,74.0L328.8,116.0L324.4,116.8L333.5,97.7L338.6,75.1ZM614.1,102.0L552.6,74.2L545.4,74.9L539.8,80.3L448,36.9L420.7,45.1L399.9,90.6L361.3,72.6L370.0,71.6L393.5,78.2L400.9,71.4L414.6,46.0L436.3,25.0L458.8,36.9L482.6,37.2L485.7,46.4L506.0,51.6L555.5,74.9L558.4,67.5L612.1,82.4L622.7,71.4L626.9,61.7L621.5,57.7L620.2,49.5L639.1,-0.0L641.5,-0.0L623.5,44.9L622.9,50.0L624.2,54.7L630.0,61.0L648.5,71.2L633.5,107.2L627.4,108.1L614.1,102.0ZM766.2,-0.0L768,-0.0L768,0.8L766.2,-0.0Z"
+   },
+   {
+    "id": "om-overstromingskansgebied-a",
+    "laag": "werkingsgebied",
+    "type": "water en watersysteem",
+    "naam": "overstromingskansgebied A",
+    "documenttype": "Omgevingsverordening",
+    "dekt_beeld": false,
+    "d": "M0,938.3L75.6,974.0L63.5,1002.4L74.8,1007.9L84.8,977.0L86.8,979.3L140.3,1004.1L139.3,1011.0L137.9,1010.7L130.9,1024L0,1024L0,938.3ZM156.4,1016.5L159.6,1011.9L164.1,1010.6L196.6,1024L151.4,1024L156.4,1016.5Z"
+   },
+   {
+    "id": "om-natuurbeekzone",
+    "laag": "werkingsgebied",
+    "type": "water en watersysteem",
+    "naam": "natuurbeekzone",
+    "documenttype": "Omgevingsverordening",
+    "dekt_beeld": false,
+    "d": "M573.1,1023.7L639.2,956.4L652.9,939.8L658.6,927.7L673.1,912.0L673.2,892.2L677.9,879.5L686.2,871.3L707.8,858.3L722.1,841.2L732.1,802.5L768,761.2L768,879.1L748.5,902.3L732.7,912.8L732.6,927.2L729.7,936.4L708.5,961.5L703.0,973.3L682.6,997.2L655.3,1024L573.1,1023.7Z"
+   },
+   {
+    "id": "om-overstromingskansgebied-b",
+    "laag": "werkingsgebied",
+    "type": "water en watersysteem",
+    "naam": "overstromingskansgebied B",
+    "documenttype": "Omgevingsverordening",
+    "dekt_beeld": false,
+    "d": "M0,-0.0L111.8,-0.0L84.4,12.4L0,32.3L0,-0.0ZM74.8,1007.9L63.5,1002.4L75.6,974.0L84.4,978.1L74.8,1007.9ZM637.7,6.4L620.2,49.5L621.5,57.7L626.9,61.7L622.7,71.4L612.1,82.4L558.4,67.5L555.5,74.9L506.0,51.6L485.7,46.4L482.6,37.2L458.8,36.9L436.3,25.0L414.6,46.0L400.9,71.4L393.5,78.2L370.0,71.6L361.3,72.6L351.3,67.9L348.5,74.0L338.6,75.1L337.5,79.9L322.1,85.2L328.6,94.9L322.5,101.9L326.4,112.5L324.4,116.8L321.3,117.3L312.2,115.0L308.2,106.3L285.1,76.6L275.2,55.2L267.4,27.9L221.5,35.2L194.2,34.7L159.9,-0.0L639.1,-0.0L637.7,6.4Z"
+   },
+   {
+    "id": "om-uitzonderingsgebied-uitbreiding-glastuin",
+    "laag": "werkingsgebied",
+    "type": "ruimtelijk gebruik",
+    "naam": "uitzonderingsgebied uitbreiding glastuinbouw",
+    "documenttype": "Omgevingsverordening",
+    "dekt_beeld": false,
+    "d": "M0,938.3L86.6,979.1L70.5,1022.5L48.1,1007.3L0,968.8L0,938.3ZM0,-0.0L111.8,-0.0L84.4,12.4L0,32.3L0,-0.0ZM637.7,6.4L620.2,49.5L621.5,57.7L626.9,61.7L622.7,71.4L612.1,82.4L558.4,67.5L555.5,74.9L506.0,51.6L485.7,46.4L482.6,37.2L458.8,36.9L436.3,25.0L414.6,46.0L400.9,71.4L393.5,78.2L370.0,71.6L361.3,72.6L351.3,67.9L348.5,74.0L338.6,75.1L333.5,97.7L324.4,116.8L321.3,117.3L312.4,115.1L288.5,90.6L277.8,75.0L275.1,70.0L273.3,52.0L267.4,27.9L221.5,35.2L194.2,34.7L159.9,-0.0L639.1,-0.0L637.7,6.4Z"
+   },
+   {
+    "id": "om-groenblauwe-mantel",
+    "laag": "werkingsgebied",
+    "type": "landschap",
+    "naam": "groenblauwe mantel",
+    "documenttype": "Omgevingsverordening",
+    "dekt_beeld": false,
+    "d": "M0,938.3L86.6,979.1L70.5,1022.5L48.1,1007.3L0,968.8L0,938.3ZM0,-0.0L111.8,-0.0L84.4,12.4L0,32.3L0,-0.0ZM637.7,6.4L620.2,49.5L621.5,57.7L626.9,61.7L622.7,71.4L612.1,82.4L558.4,67.5L555.5,74.9L506.0,51.6L485.7,46.4L482.6,37.2L458.8,36.9L436.3,25.0L414.6,46.0L400.9,71.4L393.5,78.2L370.0,71.6L361.3,72.6L351.3,67.9L348.5,74.0L338.6,75.1L333.5,97.7L324.4,116.8L321.3,117.3L312.4,115.1L288.5,90.6L277.8,75.0L275.1,70.0L273.3,52.0L267.4,27.9L221.5,35.2L194.2,34.7L159.9,-0.0L639.1,-0.0L637.7,6.4Z"
+   },
+   {
+    "id": "om-beschermingsgebied-nationaal-landschap-z",
+    "laag": "werkingsgebied",
+    "type": "landschap",
+    "naam": "beschermingsgebied Nationaal Landschap Zuid-Limburg",
+    "documenttype": "Omgevingsverordening",
+    "dekt_beeld": false,
+    "d": "M0,-0.0L111.8,-0.0L84.4,12.4L0,32.3L0,-0.0Z"
+   },
+   {
+    "id": "om-bedrijventerreinen",
+    "laag": "werkingsgebied",
+    "type": "ruimtelijk gebruik",
+    "naam": "bedrijventerreinen",
+    "documenttype": "Omgevingsverordening",
+    "dekt_beeld": false,
+    "d": "M0,40.1L11.9,37.6L121.3,-0.0L128.2,-0.0L162.0,20.9L191.9,46.7L207.3,48.8L235.1,44.7L261.1,43.8L277.8,75.0L288.5,90.6L312.4,115.1L314.3,120.9L313.8,148L304.1,170.9L309.3,171.9L302.9,189.4L194.0,170.7L181.6,221.3L226.1,229.7L225.6,233.2L261.5,239.4L250.5,283.6L181.1,267.2L96.3,252.3L65.4,253.5L0,252.0L0,40.1Z"
+   },
+   {
+    "id": "om-landelijke-kernen",
+    "laag": "werkingsgebied",
+    "type": "ruimtelijk gebruik",
+    "naam": "landelijke kernen",
+    "documenttype": "Omgevingsverordening",
+    "dekt_beeld": false,
+    "d": "M0,252.0L65.4,253.5L96.3,252.3L181.1,267.2L250.5,283.6L261.5,239.4L225.6,233.2L226.1,229.7L181.6,221.3L194.0,170.7L302.9,189.4L309.3,171.9L304.1,170.9L313.8,148L315.0,140.5L314.3,120.9L312.4,115.1L321.3,117.3L328.8,116.0L351.3,67.9L399.9,90.6L420.7,45.1L448,36.9L539.8,80.3L545.4,74.9L552.6,74.2L630.4,108.2L634.5,105.6L648.5,71.2L630.0,61.0L624.2,54.7L622.9,50.0L623.5,44.9L641.5,-0.0L768,0.8L768,1024L193.4,1024L157.2,1008.2L140.3,1004.1L0,938.3L0,252.0Z"
+   },
+   {
+    "id": "om-overstromingskansgebied-c",
+    "laag": "werkingsgebied",
+    "type": "water en watersysteem",
+    "naam": "overstromingskansgebied C",
+    "documenttype": "Omgevingsverordening",
+    "dekt_beeld": false,
+    "d": "M0,32.3L84.4,12.4L111.8,-0.0L159.9,-0.0L194.2,34.7L221.5,35.2L267.4,27.9L275.2,55.2L285.1,76.6L308.2,106.3L312.2,115.0L321.3,117.3L324.4,116.8L326.4,112.5L322.5,101.9L328.6,94.9L322.1,85.2L337.5,79.9L338.6,75.1L348.5,74.0L351.3,67.9L361.3,72.6L370.0,71.6L393.5,78.2L400.9,71.4L414.6,46.0L436.3,25.0L458.8,36.9L482.6,37.2L485.7,46.4L506.0,51.6L555.5,74.9L558.4,67.5L612.1,82.4L622.7,71.4L626.9,61.7L621.5,57.7L620.2,49.5L639.1,-0.0L768,-0.0L768,1024L196.6,1024L164.1,1010.6L159.6,1011.9L151.4,1024L130.9,1024L137.9,1010.7L139.3,1011.0L140.3,1004.1L0,938.3L0,32.3Z"
+   },
+   {
+    "id": "om-beschermingsgebied-einstein-telescope",
+    "laag": "werkingsgebied",
+    "type": "beperkingengebied",
+    "naam": "beschermingsgebied Einstein Telescope",
+    "documenttype": "Omgevingsverordening",
+    "dekt_beeld": true,
+    "d": "M0,-0.0L768,-0.0L768,636.6L0,636.6L0,-0.0Z"
+   },
+   {
+    "id": "wa-inundatiegebied",
+    "laag": "werkingsgebied",
+    "type": "water en watersysteem",
+    "naam": "Inundatiegebied",
+    "documenttype": "Waterschapsverordening",
+    "dekt_beeld": false,
+    "d": "M0,980.5L52.5,997.0L76.5,1008.7L119.8,1024L0,1024L0,980.5ZM156.4,1016.5L159.6,1011.9L164.2,1010.6L196.6,1024L151.4,1024L156.4,1016.5Z"
+   },
+   {
+    "id": "wa-meanderzone",
+    "laag": "werkingsgebied",
+    "type": "water en watersysteem",
+    "naam": "Meanderzone",
+    "documenttype": "Waterschapsverordening",
+    "dekt_beeld": false,
+    "d": "M0,938.3L136.0,997.8L138.3,999.9L138.1,1002.9L127.4,1024L0,1024L0,938.3Z"
+   },
+   {
+    "id": "perceel",
+    "laag": "perceel",
+    "type": "perceel",
+    "naam": "Perceel 1625",
+    "d": "M392.8,742.4L432.7,702.8L446.3,688.7L468.8,666.4L456.0,656.0L449.0,650.3L437.3,640.9L429.8,634.9L424.3,630.6L419.6,636.1L414.8,642.1L411.1,646.1L410.2,647.3L393.6,666.8L362.9,702.9L348.9,719.4L383.6,751.7L392.8,742.4Z"
+   }
+  ]
+ }
 }

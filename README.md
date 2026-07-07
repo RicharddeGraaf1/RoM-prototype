@@ -24,11 +24,17 @@ meteen naar de uitgeklapte drill-down + ⓘ-paneel te springen (demo).
 ## Structuur
 - `index.html` / `index-dso.html` — de twee varianten (zie boven). Beide tonen per document
   de **thema-chips**, geneste artikelen (Hoofdstuk → Artikel → Lid) en het **ⓘ-paneel** met
-  IMOW-annotaties; filterbaar per thema.
+  IMOW-annotaties; filterbaar per thema. Rechts een **kaart** met de grijze onderkaart en de
+  **werkingsgebied-contouren** als SVG-overlay: beweeg over een artikel (herkenbaar aan ◈) en
+  het bijbehorende werkingsgebied licht op. Het perceel staat er als rode stippellijn.
 - `data/broekhem33.js` — runtime-data (`window.ROM_DATA`), door beide pagina's geladen.
 - `data/broekhem33.json` — hetzelfde als datacontract (zie hieronder).
-- `img/broekhem-luchtfoto.jpg` — PDOK-luchtfoto van de locatie (kaartvlak).
-- `tools/build_data.py` — generator die de data uit de OCD-database bouwt (zie [docs/DATA.md](docs/DATA.md)).
+- `img/broekhem-onderkaart-grijs.png` — grijze PDOK-onderkaart (BRT-achtergrondkaart, style
+  `grijs`) van de locatie (kaartvlak). De oude luchtfoto (`broekhem-luchtfoto.jpg`) staat er nog.
+- `tools/build_data.py` — generator die de regel-data uit de OCD-database bouwt (zie [docs/DATA.md](docs/DATA.md)).
+- `tools/build_geo.py` — verrijkt de data met het `geo`-blok (werkingsgebied-contouren + perceel)
+  voor de kaart-overlay. Draai ná `build_data.py` (los script; geen Ollama nodig).
+- `tools/onderkaart_grijs.py` — bouwt de grijze onderkaart uit PDOK-tiles.
 - `docs/` — projectdocumentatie. `PNG/` — de design-mockups waarop dit gebaseerd is.
 
 ## Data regenereren
@@ -50,9 +56,15 @@ documenten[] {
     artikelen[] {
       nummer, opschrift, wid, thema,                   # wid = deeplink Regels op de kaart
       kenmerken { type_regel, functies[], normen[] },  # ⓘ-paneel (IMOW-annotatie)
+      geo_ids[],                                        # verwijst naar geo.features (kaart-overlay)
       leden[] { nummer, tekst, wid }                   # a/b/c staan inline in tekst
     }
   }
+}
+geo {                                                  # kaart-overlay (door build_geo.py)
+  bbox_rd [xmin,ymin,xmax,ymax], size [w,h],           # frame van de grijze onderkaart (EPSG:28992)
+  afbeelding, punt [px,py],                            # onderkaart-pad + locatiepunt in pixels
+  features[] { id, laag, type, naam, dekt_beeld, d }   # d = SVG-pad in pixelcoords; laag=werkingsgebied|perceel
 }
 ```
 `kenmerken.functies` = `{ type, naam }` (gebiedsaanwijzingen, bv. functie=Wonen);
