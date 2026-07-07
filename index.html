@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Omgevingsloket — Regels op maat</title>
+<style>
+  :root{--groen:#3a7d1e;--groen-d:#2c5f16;--lijn:#e2e2e2;--tekst:#1f2a1a;--sub:#5b6b52}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--tekst);background:#fff}
+  header{display:flex;align-items:center;gap:14px;padding:14px 22px;border-bottom:1px solid var(--lijn);position:relative}
+  .logo{width:34px;height:34px;border-radius:50%;background:var(--groen);display:flex;align-items:center;justify-content:center}
+  .logo::after{content:"";width:12px;height:12px;border-radius:50%;background:#1f2a1a}
+  .brand b{font-size:19px;color:var(--groen-d)} .brand span{font-size:19px;color:var(--sub);margin-left:6px}
+  .ribbon{position:absolute;top:10px;right:-42px;transform:rotate(38deg);background:#e8e30a;color:#333;font-weight:700;padding:5px 46px;font-size:13px;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+  .loc{display:flex;gap:26px;align-items:center;padding:10px 22px;border-bottom:1px solid var(--lijn);font-size:14px;flex-wrap:wrap}
+  .loc label{color:var(--sub)} .loc b{color:#7a2e6b}
+  .wrap{display:grid;grid-template-columns:1fr 40%;min-height:calc(100vh - 118px)}
+  @media(max-width:900px){.wrap{grid-template-columns:1fr}.side{display:none}}
+  .panel{padding:20px 24px;overflow:auto}
+  .side{border-left:1px solid var(--lijn);position:relative;overflow:hidden;
+        background:#e9ebe6 url('./img/broekhem-luchtfoto.jpg') center/cover no-repeat}
+  .pin{position:absolute;top:50%;left:50%;transform:translate(-50%,-100%);background:#fff;border:1px solid #ccc;
+       border-radius:5px;padding:4px 10px;font-size:13px;color:#7a2e6b;box-shadow:0 1px 4px rgba(0,0,0,.3);white-space:nowrap}
+  .pin::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);
+       border:6px solid transparent;border-top-color:#fff}
+  .marker{position:absolute;top:50%;left:50%;width:16px;height:16px;transform:translate(-50%,-50%);
+       background:#7a2e6b;border:3px solid #fff;border-radius:50%;box-shadow:0 1px 4px rgba(0,0,0,.4)}
+  h1{font-size:24px;color:var(--groen-d);margin:0 0 4px}
+  .sub-h{display:flex;justify-content:space-between;align-items:center;margin:18px 0 8px}
+  .sub-h h2{font-size:19px;color:var(--groen-d);margin:0} .sort{color:var(--sub);font-size:14px}
+  .card{border:1px solid var(--lijn);border-radius:6px;margin-bottom:12px;overflow:hidden}
+  .card>.head{display:flex;align-items:flex-start;gap:10px;padding:14px 16px;cursor:pointer}
+  .doc-ico{color:var(--sub);font-size:15px;margin-top:2px}
+  .titel{font-size:17px;color:var(--groen-d);font-weight:600}
+  .meta{font-size:13px;color:var(--sub);margin:2px 0 8px}
+  .chev{margin-left:auto;color:var(--sub);transition:transform .15s}
+  .card.open>.head .chev{transform:rotate(180deg)}
+  .chips{display:flex;flex-wrap:wrap;gap:7px}
+  .chip{display:inline-flex;align-items:center;gap:6px;border:1px solid #d9d9d9;border-radius:14px;padding:3px 10px;font-size:13px;background:#fff;cursor:pointer}
+  .chip .dot{width:10px;height:10px;border-radius:50%} .chip .n{color:var(--sub)}
+  .chip.actief{border-color:#333;box-shadow:0 0 0 1px #333 inset}
+  .body{border-top:1px solid var(--lijn);padding:4px 16px 14px;display:none}
+  .card.open>.body{display:block}
+  .kop{font-weight:600;font-size:13px;font-style:italic;color:var(--sub);margin:14px 0 2px}
+  .art{border-top:1px solid #f0f0f0}
+  .art>.arow{display:flex;align-items:flex-start;gap:9px;padding:8px 0 8px 2px;cursor:pointer}
+  .art .dot{width:9px;height:9px;border-radius:50%;margin-top:5px;flex:0 0 auto}
+  .art .atitel{font-size:14px;flex:1}
+  .art .info{color:var(--groen);cursor:pointer;font-size:15px;border:1px solid var(--groen);border-radius:50%;width:19px;height:19px;line-height:17px;text-align:center;flex:0 0 auto}
+  .leden{display:none;padding:2px 0 8px 20px}
+  .art.open .leden{display:block}
+  .lid{display:flex;gap:8px;font-size:13.5px;line-height:1.5;margin:4px 0}
+  .lid .nr{color:var(--sub);min-width:20px;font-weight:600}
+  .achev{color:var(--sub);margin-top:2px;transition:transform .15s} .art.open .achev{transform:rotate(90deg)}
+  .legenda{margin-top:22px;font-size:12px;color:var(--sub);border-top:1px solid var(--lijn);padding-top:12px}
+  .legenda span{display:inline-flex;align-items:center;gap:5px;margin:0 12px 6px 0}
+  .legenda .dot{width:9px;height:9px;border-radius:50%}
+  /* ⓘ drawer */
+  .drawer{position:absolute;inset:0;background:#fff;padding:20px 22px;overflow:auto;display:none}
+  .drawer.open{display:block}
+  .drawer .x{position:absolute;top:16px;right:18px;cursor:pointer;color:var(--sub);font-size:20px}
+  .drawer h3{color:var(--groen-d);margin:0 0 2px} .drawer .art-sub{color:var(--sub);font-size:13px;margin-bottom:14px}
+  .tabs{display:flex;gap:18px;border-bottom:1px solid var(--lijn);margin-bottom:14px}
+  .tabs a{padding:6px 0;color:var(--sub);cursor:pointer;border-bottom:2px solid transparent}
+  .tabs a.actief{color:var(--groen-d);border-color:var(--groen)}
+  .kv{margin:10px 0} .kv .lbl{font-weight:600;font-size:13px;margin-bottom:4px}
+  .tag{display:inline-flex;align-items:center;gap:6px;background:#f2f4ef;border-radius:4px;padding:3px 9px;font-size:13px;margin:0 6px 6px 0}
+  .tag .sq{width:11px;height:11px;border-radius:2px}
+  .leeg{color:#9a9a9a;font-style:italic;font-size:13px}
+  .err{padding:40px;color:#b00}
+</style>
+</head>
+<body>
+<header><div class="logo"></div><div class="brand"><b>Omgevingsloket</b><span>Regels op maat</span></div><div class="ribbon">Concept</div></header>
+<div class="loc"><div><label>Locatie:</label> <b id="loc-adres">…</b></div><div><label>Weergave:</label> <b>Verkennen per onderwerp</b></div></div>
+<div class="wrap">
+  <div class="panel">
+    <h1>Regels op deze locatie</h1>
+    <div class="sub-h"><h2>Regels</h2><div class="sort">Gesorteerd op bestuurslaag ⌄</div></div>
+    <div id="docs"></div>
+    <div class="legenda" id="legenda"></div>
+  </div>
+  <div class="side">
+    <div class="marker"></div>
+    <div class="pin" id="map-pin">…</div>
+    <div class="drawer" id="drawer"></div>
+  </div>
+</div>
+<script src="./data/broekhem33.js"></script>
+<script>
+const KLEUR={},NAAM={};
+const FUNCTIE_KLEUR={'functie':'#EAC63B','ruimtelijk gebruik':'#C9A227','natuur':'#6FA83C','water en watersysteem':'#2E7BC4','landschap':'#8Fae5b','erfgoed':'#7D5BA6','verkeer':'#4A4A4A','geluid':'#5CBFB0','bodem':'#8C6B3F','beperkingengebied':'#D64545','energievoorziening':'#A03A6B','defensie':'#777'};
+
+function chip(t){
+  const el=document.createElement('span');el.className='chip';
+  el.innerHTML=`<span class="dot" style="background:${KLEUR[t.id]||'#bbb'}"></span>${NAAM[t.id]||t.id}<span class="n">${t.aantal}</span>`;
+  el.onclick=e=>{e.stopPropagation();const card=el.closest('.card');const was=el.classList.contains('actief');
+    card.querySelectorAll('.chip').forEach(c=>c.classList.remove('actief'));
+    if(!was){el.classList.add('actief');filter(card,t.id);}else filter(card,null);
+    if(!card.classList.contains('open'))card.querySelector('.head').click();};
+  return el;
+}
+function filter(card,th){
+  card.querySelectorAll('.art').forEach(a=>a.style.display=(!th||a.dataset.thema===th)?'':'none');
+  card.querySelectorAll('.kop').forEach(k=>{let vis=false,n=k.nextElementSibling;
+    while(n&&n.classList.contains('art')){if(n.style.display!=='none')vis=true;n=n.nextElementSibling;}
+    k.style.display=vis?'':'none';});
+}
+function openDrawer(art){
+  const dr=document.getElementById('drawer');const k=art.kenmerken;
+  const funcByType={};(k.functies||[]).forEach(f=>{(funcByType[f.type]=funcByType[f.type]||[]).push(f.naam);});
+  const funcHtml=Object.keys(funcByType).length?Object.entries(funcByType).map(([t,ns])=>
+     `<div class="kv"><div class="lbl">${t.charAt(0).toUpperCase()+t.slice(1)}</div>${ns.map(n=>`<span class="tag"><span class="sq" style="background:${FUNCTIE_KLEUR[t]||'#bbb'}"></span>${n}</span>`).join('')}</div>`).join('')
+     :'<div class="leeg">Geen gebiedsaanwijzingen geannoteerd in dit plan.</div>';
+  const normHtml=(k.normen&&k.normen.length)?k.normen.map(n=>`<span class="tag">${n.naam}${n.waarde?': '+n.waarde:''}${n.eenheid?' '+n.eenheid:''}</span>`).join('')
+     :'<div class="leeg">Geen omgevingsnormen geannoteerd in dit plan.</div>';
+  dr.innerHTML=`<span class="x" onclick="document.getElementById('drawer').classList.remove('open')">✕</span>
+    <h3>Kenmerken en informatie</h3>
+    <div class="art-sub">Artikel ${art.nummer||''} ${art.opschrift||''}</div>
+    <div class="tabs"><a class="actief">Kenmerken</a><a title="phase 2">Toelichting</a><a title="phase 2">Beperkingen</a></div>
+    <div class="kv"><div class="lbl">Type regel</div>${k.type_regel||'<span class="leeg">onbekend</span>'}</div>
+    <div class="kv"><div class="lbl">Gebiedsaanwijzingen</div>${funcHtml}</div>
+    <div class="kv"><div class="lbl">Omgevingsnormen</div>${normHtml}</div>`;
+  dr.classList.add('open');
+}
+function renderDoc(doc){
+  const card=document.createElement('div');card.className='card';
+  const head=document.createElement('div');head.className='head';
+  const chips=document.createElement('div');chips.className='chips';
+  doc.themas.forEach(t=>chips.appendChild(chip(t)));
+  head.innerHTML=`<span class="doc-ico">▤</span><div style="flex:1">
+     <div class="titel">${doc.titel||''}</div>
+     <div class="meta">${doc.documenttype||''}${doc.bevoegd_gezag?' — '+doc.bevoegd_gezag:''} · ${doc.aantal_artikelen} artikelen</div>
+    </div><span class="chev">⌄</span>`;
+  head.querySelector('div').appendChild(chips);
+  head.onclick=()=>card.classList.toggle('open');
+  card.appendChild(head);
+  const body=document.createElement('div');body.className='body';
+  (doc.hoofdstukken||[]).forEach(h=>{
+    const k=document.createElement('div');k.className='kop';k.textContent=h.titel;body.appendChild(k);
+    h.artikelen.forEach(a=>{
+      const art=document.createElement('div');art.className='art';art.dataset.thema=a.thema;
+      const leden=a.leden.map(l=>`<div class="lid"><span class="nr">${l.nummer||''}</span><span>${(l.tekst||'').trim()}</span></div>`).join('');
+      art.innerHTML=`<div class="arow"><span class="achev">›</span><span class="dot" style="background:${KLEUR[a.thema]||'#bbb'}"></span>
+        <span class="atitel">Artikel ${a.nummer||''}${a.opschrift?' '+a.opschrift:''}</span>
+        <span class="info" title="Kenmerken en informatie">ⓘ</span></div>
+        <div class="leden">${leden}</div>`;
+      art.querySelector('.arow').onclick=e=>{if(e.target.classList.contains('info'))return;art.classList.toggle('open');};
+      art.querySelector('.info').onclick=e=>{e.stopPropagation();openDrawer(a);};
+      body.appendChild(art);
+    });
+  });
+  card.appendChild(body);
+  return card;
+}
+(function(d){
+  if(!d){document.body.insertAdjacentHTML('beforeend','<div class="err">Data niet geladen (data/broekhem33.js ontbreekt).</div>');return;}
+  d.themas.forEach(t=>{KLEUR[t.id]=t.kleur;NAAM[t.id]=t.naam;});
+  document.getElementById('loc-adres').textContent=d.locatie.adres;
+  document.getElementById('map-pin').textContent=d.locatie.adres;
+  const host=document.getElementById('docs');d.documenten.forEach(doc=>host.appendChild(renderDoc(doc)));
+  document.getElementById('legenda').innerHTML='<b>Thema-legenda:</b><br>'+d.themas.map(t=>`<span><span class="dot" style="background:${t.kleur}"></span>${t.naam}</span>`).join('');
+  // demo-hook: ?open=1 klapt de geannoteerde verordening + eerste geannoteerde artikel + ⓘ-paneel open (voor screenshots)
+  if(new URLSearchParams(location.search).get('open')){
+    const ci=d.documenten.findIndex(x=>x.hoofdstukken.some(h=>h.artikelen.some(a=>a.kenmerken.functies.length||a.kenmerken.normen.length)));
+    const card=document.querySelectorAll('.card')[ci<0?0:ci];
+    card.querySelector('.head').click();
+    const arts=[...card.querySelectorAll('.art')];
+    const flat=d.documenten[ci<0?0:ci].hoofdstukken.flatMap(h=>h.artikelen);
+    const ai=flat.findIndex(a=>a.kenmerken.functies.length||a.kenmerken.normen.length);
+    const target=arts[ai<0?0:ai];
+    if(target){target.querySelector('.arow').click();target.querySelector('.info').click();}
+  }
+})(window.ROM_DATA);
+</script>
+</body>
+</html>
