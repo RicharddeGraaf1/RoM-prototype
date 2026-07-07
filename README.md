@@ -3,6 +3,12 @@
 Verkennende, categorie-gedreven weergave van de regels die op één locatie gelden
 (**Broekhem 33, Valkenburg**). Statische demo: geen backend nodig.
 
+## Documentatie
+- [docs/ARCHITECTUUR.md](docs/ARCHITECTUUR.md) — hoe het in elkaar zit + de kernkeuzes en databevindingen.
+- [docs/DATA.md](docs/DATA.md) — de data (her)genereren, andere locatie, thema's tunen.
+- [docs/DSO-TOOLKIT.md](docs/DSO-TOOLKIT.md) — CDN-paden + welke DSO-componenten (niet) werkten.
+- [docs/ROADMAP.md](docs/ROADMAP.md) — vervolgstappen.
+
 ## Twee varianten
 | Bestand | Stijl | Internet nodig? |
 |---|---|---|
@@ -22,7 +28,12 @@ meteen naar de uitgeklapte drill-down + ⓘ-paneel te springen (demo).
 - `data/broekhem33.js` — runtime-data (`window.ROM_DATA`), door beide pagina's geladen.
 - `data/broekhem33.json` — hetzelfde als datacontract (zie hieronder).
 - `img/broekhem-luchtfoto.jpg` — PDOK-luchtfoto van de locatie (kaartvlak).
-- `PNG/` — de design-mockups waarop dit gebaseerd is.
+- `tools/build_data.py` — generator die de data uit de OCD-database bouwt (zie [docs/DATA.md](docs/DATA.md)).
+- `docs/` — projectdocumentatie. `PNG/` — de design-mockups waarop dit gebaseerd is.
+
+## Data regenereren
+`python tools/build_data.py` — vereist de OCD-omgeving (Postgres + Ollama nomic).
+Prerequisites en het aanpassen naar een andere locatie: [docs/DATA.md](docs/DATA.md).
 
 > **DSO-variant offline maken?** Nu laadt `index-dso.html` `dso.css` + de componenten van
 > de CDN. Voor volledig offline gebruik moeten die assets (+ Asap-font) lokaal gevendord worden.
@@ -65,9 +76,7 @@ Waterschapsverordening); toelichting en informatieobject-verwijzingen zijn eruit
   en toont het ⓘ-paneel eerlijk "niet geannoteerd in dit plan" waar de annotatie ontbreekt.
   Dit is precies waarom embedding-categorisering nodig is.
 
-## Nog te doen (phase 3)
-- Tabs *Toelichting* / *Beperkingen* in het ⓘ-paneel (nu alleen *Kenmerken*).
-- Sectie *Mogelijke beperkingen* (externe veiligheid, geluidsaandachtgebieden) uit `gebiedsaanwijzing`.
-- `Bbl` "Algemene bouwregels" (AMvB) meenemen.
-- Echte kaartweergave (nu placeholder) + `wid`-deeplink naar Regels op de kaart.
-- Locatie-specifieke normwaarden (nu norm-niveau, niet per punt gefilterd).
+## Vervolgstappen
+Zie [docs/ROADMAP.md](docs/ROADMAP.md). Kort: sectie *Mogelijke beperkingen*, de ⓘ-tabs
+*Toelichting/Beperkingen*, Bbl-bouwregels, echte interactieve kaart, DSO-variant offline,
+en optioneel een zoekvraag-modus via het OCD-`/v1/semantisch`-endpoint.
