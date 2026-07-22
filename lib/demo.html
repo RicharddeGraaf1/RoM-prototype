@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<title>ocd-regeltekst — demo</title>
+<style>
+  body { font: 15px/1.5 system-ui, sans-serif; max-width: 760px; margin: 2rem auto; padding: 0 1rem; color: #1a1a1a; }
+  h1 { font-size: 1.3rem; } h2 { font-size: 1rem; margin-top: 1.6rem; }
+  .kaart { border: 1px solid #ddd; border-radius: 8px; padding: 1rem 1.2rem; margin: .6rem 0; }
+  .toggle { display: inline-flex; border: 1px solid #ccc; border-radius: 7px; overflow: hidden; margin-bottom: .8rem; }
+  .toggle button { border: 0; background: #fff; color: #555; font-size: 13px; padding: 4px 12px; cursor: pointer; }
+  .toggle button.active { background: #39870c; color: #fff; }
+  .hint { color: #888; font-size: .85rem; }
+</style>
+</head>
+<body>
+<h1>&lt;ocd-regeltekst&gt; — gedeelde STOP-weergave</h1>
+<p class="hint">Dit bestand werkt bij <b>dubbelklikken</b> (geen server, geen build, geen API). Klassiek script.</p>
+
+<div class="toggle" id="toggle">
+  <button class="active" data-mode="juridisch">Juridisch</button>
+  <button data-mode="begrijpelijk">Begrijpelijk</button>
+</div>
+
+<div class="kaart">
+  <h2>Voorbeeld met CALS-tabel + lijst</h2>
+  <ocd-regeltekst id="a"></ocd-regeltekst>
+</div>
+
+<!-- Gewoon klassiek script — laadt óók via file:// -->
+<script src="./ocd-regeltekst.js"></script>
+<script>
+  var xml = '<Inhoud xmlns="https://standaarden.overheid.nl/stop/imop/tekst/">' +
+    '<Al>Voor geluidgevoelige ruimten gelden de volgende waarden.</Al>' +
+    '<table><title>Tabel — waarde voor geluid</title><tgroup cols="4">' +
+      '<thead><row><entry></entry><entry>07.00–19.00</entry><entry>19.00–22.00</entry><entry>22.00–07.00</entry></row></thead>' +
+      '<tbody>' +
+        '<row><entry>woonfunctie</entry><entry>50 dB(A)</entry><entry>45 dB(A)</entry><entry>40 dB(A)</entry></row>' +
+        '<row><entry>onderwijsfunctie</entry><entry>50 dB(A)</entry><entry>—</entry><entry>—</entry></row>' +
+      '</tbody>' +
+    '</tgroup></table>' +
+    '<Al>De aanvraag bevat in ieder geval:</Al>' +
+    '<Lijst type="expliciet">' +
+      '<Li><LiNummer>a.</LiNummer><Al>een beschrijving van de activiteit;</Al></Li>' +
+      '<Li><LiNummer>b.</LiNummer><Al>de begrenzing van het gebied.</Al></Li>' +
+    '</Lijst>' +
+  '</Inhoud>';
+
+  var el = document.getElementById('a');
+  el.tekst = xml;
+  el.begrijpelijk = 'Voor geluidgevoelige ruimten gelden maximale geluidwaarden per tijdvak. ' +
+    'Overdag mag het geluid hoger zijn dan ’s nachts. Bij uw aanvraag levert u een ' +
+    'beschrijving van de activiteit en de begrenzing van het gebied aan.';
+
+  var knoppen = document.querySelectorAll('#toggle button');
+  knoppen.forEach(function (b) {
+    b.onclick = function () {
+      knoppen.forEach(function (x) { x.classList.toggle('active', x === b); });
+      document.querySelectorAll('ocd-regeltekst').forEach(function (t) { t.weergave = b.dataset.mode; });
+    };
+  });
+</script>
+</body>
+</html>

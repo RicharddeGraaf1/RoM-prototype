@@ -63,6 +63,7 @@
   .lid{display:flex;gap:8px;font-size:13.5px;line-height:1.5;margin:4px 0}
   .lid .nr{color:var(--sub);min-width:20px;font-weight:600}
   .lid .lid-tekst{flex:1}
+  .lid ocd-regeltekst{flex:1;min-width:0;font-size:13px}
   .lid .beg{display:none}
   body.mode-beg .lid .jur{display:none}
   body.mode-beg .lid .beg{display:block}
@@ -115,6 +116,7 @@
     <div class="drawer" id="drawer"></div>
   </div>
 </div>
+<script src="./lib/ocd-regeltekst.js"></script>
 <script src="./data/broekhem33.js"></script>
 <script>
 const KLEUR={},NAAM={};
@@ -212,17 +214,20 @@ function renderDoc(doc){
       const k=a.kenmerken||{};
       const hasKenmerken=(k.functies&&k.functies.length)||(k.normen&&k.normen.length);
       if(hasGeo)art.dataset.geo=a.geo_ids.join(' ');
-      const leden=a.leden.map(l=>{
-        const jur=(l.tekst||'').trim(), beg=(l.begrijpelijk||'').trim();
-        const begCell=beg?`<span class="beg">${beg}<span class="beg-badge">geen juridische status</span></span>`
-                         :`<span class="beg beg-fallback">${jur}</span>`;
-        return `<div class="lid"><span class="nr">${l.nummer||''}</span><span class="lid-tekst"><span class="jur">${jur}</span>${begCell}</span></div>`;
-      }).join('');
+      const beginMode=document.body.classList.contains('mode-beg')?'begrijpelijk':'juridisch';
+      const leden=a.leden.map((l,i)=>
+        `<div class="lid"><span class="nr">${l.nummer||''}</span><ocd-regeltekst class="lid-rt" data-i="${i}" weergave="${beginMode}"></ocd-regeltekst></div>`
+      ).join('');
       art.innerHTML=`<div class="arow"><span class="achev">›</span><span class="dot" style="background:${KLEUR[a.thema]||'#bbb'}"></span>
         <span class="atitel">Artikel ${a.nummer||''}${a.opschrift?' '+a.opschrift:''}</span>
         ${hasGeo?'<span class="geo-ind" title="Werkingsgebied op de kaart">◈</span>':''}
         ${hasKenmerken?'<span class="info" title="Kenmerken en informatie">ⓘ</span>':''}</div>
         <div class="leden">${leden}</div>`;
+      // Rauwe STOP-XML + begrijpelijk als properties zetten (niet als attribuut — te groot/complex).
+      art.querySelectorAll('ocd-regeltekst.lid-rt').forEach(el=>{
+        const l=a.leden[+el.dataset.i];
+        el.tekst=(l.tekst_xml||l.tekst||''); el.begrijpelijk=l.begrijpelijk||null;
+      });
       const arow=art.querySelector('.arow');
       arow.onclick=e=>{if(e.target.classList.contains('info'))return;art.classList.toggle('open');};
       if(hasGeo){arow.addEventListener('mouseenter',()=>highlight(a.geo_ids));arow.addEventListener('mouseleave',clearHi);}
@@ -241,7 +246,9 @@ function renderDoc(doc){
   const host=document.getElementById('docs');d.documenten.forEach(doc=>host.appendChild(renderDoc(doc)));
   document.querySelectorAll('#viewtoggle button').forEach(b=>b.onclick=()=>{
     document.querySelectorAll('#viewtoggle button').forEach(x=>x.classList.toggle('active',x===b));
-    document.body.classList.toggle('mode-beg',b.dataset.mode==='beg');
+    const beg=b.dataset.mode==='beg';
+    document.body.classList.toggle('mode-beg',beg);
+    document.querySelectorAll('ocd-regeltekst').forEach(el=>el.weergave=beg?'begrijpelijk':'juridisch');
   });
   initGeo(d.geo);
   document.getElementById('legenda').innerHTML='<b>Thema-legenda:</b><br>'+d.themas.map(t=>`<span><span class="dot" style="background:${t.kleur}"></span>${t.naam}</span>`).join('');

@@ -115,7 +115,7 @@ def main():
         expr = reg["expr"]
         cur.execute("SELECT id,parent_id,element_type,nummer,opschrift,wid,inhoud_plain FROM p2p.tekst_element WHERE regeling_expression=%s", (expr,))
         elts = {r["id"]: r for r in cur.fetchall()}
-        cur.execute("""SELECT te.id, te.wid, te.nummer, te.inhoud_plain, v.embedding::text emb,
+        cur.execute("""SELECT te.id, te.wid, te.nummer, te.inhoud_plain, te.inhoud, v.embedding::text emb,
                    h.tekst AS begrijpelijk
             FROM v2a.tekst_embedding v JOIN p2p.tekst_element te ON te.id=v.tekst_element_id
             LEFT JOIN v2a.hertaling h ON h.bron_hash = v2a.norm_hash(te.inhoud_plain)
@@ -166,6 +166,7 @@ def main():
                     "hoofdstuk": (f'{h["nummer"] or ""} {h["opschrift"] or ""}'.strip() if h else "Overig"),
                 })
             arts[aid]["leden"].append({"nummer": (ch["nummer"] or "").rstrip("."), "tekst": (ch["inhoud_plain"] or "").strip(),
+                                       "tekst_xml": (ch["inhoud"] or "").strip(),
                                        "begrijpelijk": (ch.get("begrijpelijk") or "").strip() or None, "wid": ch["wid"]})
             arts[aid]["themas"].append(themap[ch["id"]])
 
