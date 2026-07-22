@@ -54,6 +54,15 @@
   .leden{display:none;padding:2px 0 8px 22px} .art.open .leden{display:block}
   .lid{display:flex;gap:8px;font-size:13.5px;line-height:1.55;margin:5px 0}
   .lid .nr{color:#5b6b52;min-width:20px;font-weight:600}
+  .lid .lid-tekst{flex:1}
+  .lid .beg{display:none}
+  body.mode-beg .lid .jur{display:none}
+  body.mode-beg .lid .beg{display:block}
+  .beg-badge{display:inline-block;margin-left:6px;font-size:10.5px;color:#5b6b52;border:1px solid #e2e2e2;border-radius:9px;padding:0 6px;vertical-align:1px;white-space:nowrap}
+  .beg-fallback{color:#5b6b52;font-style:italic}
+  .viewtoggle{display:inline-flex;border:1px solid #e2e2e2;border-radius:7px;overflow:hidden;margin:0 0 14px}
+  .viewtoggle button{border:0;background:#fff;color:#5b6b52;font-size:12px;padding:5px 13px;cursor:pointer}
+  .viewtoggle button.active{background:#39870c;color:#fff}
   .legenda{margin-top:20px;font-size:12px;color:#5b6b52;border-top:1px solid #e2e2e2;padding-top:12px}
   .legenda span{display:inline-flex;align-items:center;gap:5px;margin:0 12px 6px 0}
   .legenda .dot{width:9px;height:9px;border-radius:50%}
@@ -73,6 +82,9 @@
 <div class="grid">
   <div class="panel">
     <h1>Regels op deze locatie</h1>
+    <div class="viewtoggle" id="viewtoggle" title="Wissel tussen de juridische tekst en een begrijpelijke uitleg">
+      <button class="active" data-mode="jur">Juridisch</button><button data-mode="beg">Begrijpelijk</button>
+    </div>
     <div id="docs"></div>
     <div class="legenda" id="legenda"></div>
   </div>
@@ -177,7 +189,12 @@ function renderDoc(doc){
       const k=a.kenmerken||{};
       const hasKenmerken=(k.functies&&k.functies.length)||(k.normen&&k.normen.length);
       if(hasGeo)art.dataset.geo=a.geo_ids.join(' ');
-      const leden=a.leden.map(l=>`<div class="lid"><span class="nr">${l.nummer||''}</span><span>${(l.tekst||'').trim()}</span></div>`).join('');
+      const leden=a.leden.map(l=>{
+        const jur=(l.tekst||'').trim(), beg=(l.begrijpelijk||'').trim();
+        const begCell=beg?`<span class="beg">${beg}<span class="beg-badge">geen juridische status</span></span>`
+                         :`<span class="beg beg-fallback">${jur}</span>`;
+        return `<div class="lid"><span class="nr">${l.nummer||''}</span><span class="lid-tekst"><span class="jur">${jur}</span>${begCell}</span></div>`;
+      }).join('');
       art.innerHTML=`<div class="arow"><span class="tw"><span class="achev">›</span>
         <span class="dot" style="background:${KLEUR[a.thema]||'#bbb'}"></span>
         <span class="atitel">Artikel ${a.nummer||''}${a.opschrift?' '+a.opschrift:''}</span>
@@ -200,6 +217,10 @@ function renderDoc(doc){
   d.themas.forEach(t=>{KLEUR[t.id]=t.kleur;NAAM[t.id]=t.naam;});
   document.getElementById('loc-adres').textContent=d.locatie.adres;
   const host=document.getElementById('docs');d.documenten.forEach(doc=>host.appendChild(renderDoc(doc)));
+  document.querySelectorAll('#viewtoggle button').forEach(b=>b.onclick=()=>{
+    document.querySelectorAll('#viewtoggle button').forEach(x=>x.classList.toggle('active',x===b));
+    document.body.classList.toggle('mode-beg',b.dataset.mode==='beg');
+  });
   initGeo(d.geo);
   document.getElementById('legenda').innerHTML='<b>Thema-legenda:</b><br>'+d.themas.map(t=>`<span><span class="dot" style="background:${t.kleur}"></span>${t.naam}</span>`).join('');
   if(new URLSearchParams(location.search).get('open')){

@@ -53,6 +53,13 @@ OUT = os.path.join(os.path.dirname(__file__), "..", "data", "broekhem33.json")
 DEC = ("Omgevingsplan", "Omgevingsverordening", "Waterschapsverordening")
 DIST_MAX = 0.62                             # boven deze cosine-afstand -> 'overig'
 
+# Begrijpelijke variant (hertaling) — content-adresseerbaar in v2a.hertaling.
+# We joinen op de genormaliseerde hash van inhoud_plain (v2a.norm_hash), zodat
+# één hertaling meteen alle bruidsschat-duplicaten dekt. Zie
+# dso-loader/scripts/begrijpelijk-hertaling.py + 2026-07-add-hertaling-cache.sql.
+HERTAAL_MODEL = "claude-sonnet-5"
+HERTAAL_PROMPT_VERSIE = "v1"
+
 # (id, weergavenaam, kleur, zaad-omschrijving voor de thema-centroïde)
 THEMAS = [
     ("wonen", "Wonen", "#EAC63B", "woonfunctie woning wonen huishouden bewoning aantal woningen woningbouw mantelzorgwoning nachtverblijf huisvesting"),
@@ -108,11 +115,14 @@ def main():
         expr = reg["expr"]
         cur.execute("SELECT id,parent_id,element_type,nummer,opschrift,wid,inhoud_plain FROM p2p.tekst_element WHERE regeling_expression=%s", (expr,))
         elts = {r["id"]: r for r in cur.fetchall()}
-        cur.execute("""SELECT te.id, te.wid, te.nummer, te.inhoud_plain, v.embedding::text emb
+        cur.execute("""SELECT te.id, te.wid, te.nummer, te.inhoud_plain, v.embedding::text emb,
+                   h.tekst AS begrijpelijk
             FROM v2a.tekst_embedding v JOIN p2p.tekst_element te ON te.id=v.tekst_element_id
+            LEFT JOIN v2a.hertaling h ON h.bron_hash = v2a.norm_hash(te.inhoud_plain)
+              AND h.model=%s AND h.prompt_versie=%s
             WHERE v.regeling_expression=%s AND v.bron_soort IN ('Lid','Divisietekst')
               AND v.kop_pad NOT ILIKE '%%toelicht%%' AND v.inhoud_plain NOT ILIKE '%%/join/id/regdata/%%'
-            ORDER BY te.volgorde""", (expr,))
+            ORDER BY te.volgorde""", (HERTAAL_MODEL, HERTAAL_PROMPT_VERSIE, expr))
         chunks = cur.fetchall()
         if not chunks:
             continue
@@ -155,7 +165,8 @@ def main():
                     "wid": a["wid"],
                     "hoofdstuk": (f'{h["nummer"] or ""} {h["opschrift"] or ""}'.strip() if h else "Overig"),
                 })
-            arts[aid]["leden"].append({"nummer": (ch["nummer"] or "").rstrip("."), "tekst": (ch["inhoud_plain"] or "").strip(), "wid": ch["wid"]})
+            arts[aid]["leden"].append({"nummer": (ch["nummer"] or "").rstrip("."), "tekst": (ch["inhoud_plain"] or "").strip(),
+                                       "begrijpelijk": (ch.get("begrijpelijk") or "").strip() or None, "wid": ch["wid"]})
             arts[aid]["themas"].append(themap[ch["id"]])
 
         hoofdst = defaultdict(list)
@@ -201,7 +212,10 @@ def main():
     print("geschreven:", OUT, "+ .js")
     for d in documenten:
         n = sum(1 for h in d["hoofdstukken"] for a in h["artikelen"] if a["kenmerken"]["functies"] or a["kenmerken"]["normen"])
-        print(f"  {d['documenttype']:22} {d['aantal_artikelen']:4} artikelen, {n} met functie/norm-annotatie")
+        leden = [l for h in d["hoofdstukken"] for a in h["artikelen"] for l in a["leden"]]
+        beg = sum(1 for l in leden if l.get("begrijpelijk"))
+        print(f"  {d['documenttype']:22} {d['aantal_artikelen']:4} artikelen, {n} met functie/norm-annotatie, "
+              f"{beg}/{len(leden)} leden met begrijpelijke variant")
     c.close()
 
 
