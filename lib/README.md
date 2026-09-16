@@ -61,7 +61,7 @@ alleen gedefinieerd als `HTMLElement` bestaat, en de parser draait met een
 
 | Afnemer | Status |
 |---|---|
-| **RoM-prototype** | ✅ eerste consument — `build_data.py` emit `tekst_xml`; leden renderen via `<ocd-regeltekst>` met de Juridisch/Begrijpelijk-toggle |
+| **RoM-prototype** | ✅ eerste consument — statische demo via `build_data.py` (`tekst_xml`); de live site (`public/`) gebruikt een kopie in `public/vendor/` op `/v1/viewer/teksten`, gestyled via `--ocd-*` uit stijl C. Beide kopieën samen syncen |
 | instructieregels.nl | ⬜ vervangt de lokale mini-`stopNaarHtml` |
 | omgevingsbot.nl | ⬜ bron-panel |
 | OCDviewer (donor) | ⬜ importeert de parser uit dit pakket (pariteit-test), houdt z'n rijke Angular-render |

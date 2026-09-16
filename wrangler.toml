@@ -1,0 +1,9 @@
+# Cloudflare Pages — Git-gekoppeld; een push naar main deployt.
+# Publish-directory is public/: docs/, tools/, data/ en de archiefvarianten in
+# de repo-root komen NOOIT online. functions/ ligt buiten public/ en wordt door
+# de Git-build deterministisch opgepakt.
+# OCD_API_KEY_PUBLIC staat als geheim in het Pages-project, niet hier.
+# Lokaal: `npx wrangler pages dev` met de sleutel in .dev.vars (gitignored).
+name = "rom-prototype"
+pages_build_output_dir = "public"
+compatibility_date = "2026-05-01"

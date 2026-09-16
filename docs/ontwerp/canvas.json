@@ -1,0 +1,85 @@
+{
+  "artboards": [
+    {
+      "file": "RustigRegister.dc.html",
+      "title": "A · Rustig register — Zoeken",
+      "x": 0,
+      "y": 0,
+      "w": 1440,
+      "h": 900
+    },
+    {
+      "file": "RustigRom.dc.html",
+      "title": "A · Rustig register — Regels op maat",
+      "x": 1540,
+      "y": 0,
+      "w": 1440,
+      "h": 900
+    },
+    {
+      "file": "KaartEerstRegister.dc.html",
+      "title": "B · Kaart-eerst — Zoeken",
+      "x": 0,
+      "y": 1040,
+      "w": 1440,
+      "h": 900
+    },
+    {
+      "file": "KaartEerstRom.dc.html",
+      "title": "B · Kaart-eerst — Regels op maat",
+      "x": 1540,
+      "y": 1040,
+      "w": 1440,
+      "h": 900
+    },
+    {
+      "file": "DocumentRegister.dc.html",
+      "title": "C · Document en interface — Zoeken",
+      "x": 0,
+      "y": 2080,
+      "w": 1440,
+      "h": 900
+    },
+    {
+      "file": "Main.dc.html",
+      "title": "C · Document en interface — Regels op maat",
+      "x": 1540,
+      "y": 2080,
+      "w": 1440,
+      "h": 900
+    }
+  ],
+  "annotations": [
+    {
+      "id": "richting-a",
+      "x": -380,
+      "y": 0,
+      "w": 320,
+      "text": "A · Rustig register\n\nDicht bij wat er nu staat: dezelfde letter (Atkinson Hyperlegible), hetzelfde blauw-violet, hetzelfde merkteken. Weg zijn de serif-koppen, de papierkorrel en de zwarte lijnen. Daarvoor in de plaats komen witte vlakken met een kleine afronding.\n\nVoor: kleinste stap; het register blijft herkenbaar.\nTegen: netjes maar weinig eigen. Een kaartapplicatie in deze stijl oogt al snel als een generiek dashboard."
+    },
+    {
+      "id": "richting-b",
+      "x": -380,
+      "y": 1040,
+      "w": 320,
+      "text": "B · Kaart-eerst\n\nModerner en ruimer. Een donkere kop, Schibsted Grotesk voor koppen en knoppen, zwevende panelen met schaduw en afgeronde vormen. RoM gebruikt de volle kaart; het register opent met een grote zoekkaart waarin je al kunt kiezen tussen een document zoeken en regels op een locatie.\n\nVoor: voelt als een product; kaart en register zijn één familie.\nTegen: het verst van de huidige site. Het donkere en ronde trekt richting consumentenapp en past minder bij een register dat vooral nauwkeurig wil zijn."
+    },
+    {
+      "id": "richting-c",
+      "x": -380,
+      "y": 2080,
+      "w": 320,
+      "text": "C · Document en interface\n\nDe interface is sans-serif, compact en ligt op een koelgrijze ondergrond. Wat bron is (documenttitels, artikelen, leden) staat op witte ‘bladen’ in een serif (Source Serif 4). Zo zie je in één oogopslag wat regeltekst is en wat bediening.\n\nVoor: eigen gezicht dat ook iets uitlegt; houdt het serieuze van het register zonder krant. Werkt in beide schermen hetzelfde.\nTegen: vraagt discipline. Serif mag alleen voor brontekst, anders valt het onderscheid weg. Dichter dan A.\n\nMijn voorkeur."
+    },
+    {
+      "id": "gedeeld",
+      "x": 3060,
+      "y": 0,
+      "w": 300,
+      "text": "In alle drie hetzelfde\n\n• Themakleuren (Wonen, Groen, Bouwen, …) staan los van de statuskleuren (goed/matig/zwak), zodat een groene chip niet als ‘goed’ leest.\n• Geen DSO-groen, geen loket-logo.\n• ‘Regels op maat’ staat als prototype in het menu van het register.\n\nVoorbeeldinhoud: de zoekresultaten, aantallen, oordelen, het bestemmingsplan en de tekst van de leden zijn verzonnen voor de mockup. Broekhem 33 en de themaverdeling komen uit de screenshots."
+    }
+  ],
+  "launch": {
+    "view": "canvas"
+  }
+}

@@ -1,0 +1,16 @@
+/*
+  # Altijd hervalideren: geen buildstap, dus geen hash in de bestandsnamen.
+  # LET OP: op een custom domein kan de zone-instelling Browser Cache TTL dit
+  # naar max-age=14400 herschrijven voor .js/.css — daarom de ?v=-tokens in
+  # index.html (zie CLAUDE.md van omgevingsdocumentenregister.nl).
+  Cache-Control: public, max-age=0, must-revalidate
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), camera=(), microphone=(), interest-cohort=()
+  # style-src 'unsafe-inline' is nodig: <ocd-regeltekst> zet zijn CSS als
+  # <style> in zijn shadow root. script-src blijft strikt 'self'.
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https://service.pdok.nl; connect-src 'self' https://api.pdok.nl; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'self'; form-action 'self'
+
+/vendor/*
+  Cache-Control: public, max-age=86400

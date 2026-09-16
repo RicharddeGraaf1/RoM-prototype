@@ -1,27 +1,51 @@
 # RoM — Regels op maat (prototype)
 
-Verkennende, categorie-gedreven weergave van de regels die op één locatie gelden
-(**Broekhem 33, Valkenburg**). Statische demo: geen backend nodig.
+Welke regels gelden op een adres of perceel? Kies een locatie en zie de
+omgevingsdocumenten die daar gelden, per onderwerp, tot op het lid van een artikel —
+met het perceel op de kaart. In huisstijl **C · Document en interface**, als
+zelfstandige site naast [omgevingsdocumentenregister.nl](https://omgevingsdocumentenregister.nl).
+
+**Twee generaties in deze repo:**
+
+| | Live site (`public/`) | Statische demo (repo-root) |
+|---|---|---|
+| Locatie | Elke locatie: adres, perceel of klik op de kaart | Alleen Broekhem 33 |
+| Data | Live uit OCD (via `functions/api`) en PDOK | Vooraf gebouwd door `tools/` |
+| Onderwerpen | Indeling van het register (`/onderwerpen`) | Embedding-centroïden |
+| Stijl | C · Document en interface | Omgevingsloket-look / DSO-toolkit |
+| Status | Fase 0–4 van het [realisatieplan](docs/REALISATIEPLAN.md) | Archief; werkingsgebieden en ⓘ-paneel komen daar nog vandaan |
+
+## Live site lokaal draaien
+```bash
+# eenmalig: de publieke OCD-sleutel in .dev.vars (gitignored), bv. via Railway:
+#   (cd ../OCD/ocd-api && railway variables --kv | grep ^OCD_API_KEY_PUBLIC=) > .dev.vars
+npx wrangler pages dev          # leest wrangler.toml → public/ + functions/
+# → http://localhost:8788
+```
+Deploy: Cloudflare Pages, Git-gekoppeld — zie [CLAUDE.md](CLAUDE.md).
 
 ## Documentatie
 - [docs/ARCHITECTUUR.md](docs/ARCHITECTUUR.md) — hoe het in elkaar zit + de kernkeuzes en databevindingen.
 - [docs/DATA.md](docs/DATA.md) — de data (her)genereren, andere locatie, thema's tunen.
 - [docs/DSO-TOOLKIT.md](docs/DSO-TOOLKIT.md) — CDN-paden + welke DSO-componenten (niet) werkten.
 - [docs/ROADMAP.md](docs/ROADMAP.md) — vervolgstappen.
+- [docs/REALISATIEPLAN.md](docs/REALISATIEPLAN.md) — van statische demo naar live site in huisstijl C (2026-09-16).
 
-## Twee varianten
+## Statische demo (archief)
+
+### Twee varianten
 | Bestand | Stijl | Internet nodig? |
 |---|---|---|
 | **`index.html`** | Eigen, hand-gestylede Omgevingsloket-look. Volledig self-contained. | Nee — dubbelklikken werkt |
 | **`index-dso.html`** | Officiële **DSO-toolkit 98.0.0** (`dso.css` + web-componenten: `dso-label`, `dso-alert`, `dso-info-button`, `dso-icon`). Echte DSO look-and-feel. | Ja — laadt de toolkit van `cdn.dso-toolkit.nl` |
 
-## Draaien
+### Draaien
 **Dubbelklik `index.html`** (of `index-dso.html` mét internet) — geen server nodig.
 De data zit in `data/broekhem33.js` als `window.ROM_DATA` en wordt via een `<script>`-tag
 geladen, dus geen `fetch`/CORS-probleem op `file://`. Voeg `?open=1` aan de URL toe om
 meteen naar de uitgeklapte drill-down + ⓘ-paneel te springen (demo).
 
-## Structuur
+### Structuur
 - `index.html` / `index-dso.html` — de twee varianten (zie boven). Beide tonen per document
   de **thema-chips**, geneste artikelen (Hoofdstuk → Artikel → Lid) en het **ⓘ-paneel** met
   IMOW-annotaties; filterbaar per thema. Rechts een **kaart** met de grijze onderkaart en de
@@ -37,14 +61,14 @@ meteen naar de uitgeklapte drill-down + ⓘ-paneel te springen (demo).
 - `tools/onderkaart_grijs.py` — bouwt de grijze onderkaart uit PDOK-tiles.
 - `docs/` — projectdocumentatie. `PNG/` — de design-mockups waarop dit gebaseerd is.
 
-## Data regenereren
+### Data regenereren
 `python tools/build_data.py` — vereist de OCD-omgeving (Postgres + Ollama nomic).
 Prerequisites en het aanpassen naar een andere locatie: [docs/DATA.md](docs/DATA.md).
 
 > **DSO-variant offline maken?** Nu laadt `index-dso.html` `dso.css` + de componenten van
 > de CDN. Voor volledig offline gebruik moeten die assets (+ Asap-font) lokaal gevendord worden.
 
-## Datacontract (`data/broekhem33.json`)
+### Datacontract (`data/broekhem33.json`)
 ```
 locatie   { adres, x, y, gemeente }
 themas[]  { id, naam, kleur }                          # vaste thema-taxonomie (legenda)

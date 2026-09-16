@@ -6,3 +6,9 @@ __pycache__/
 .DS_Store
 Thumbs.db
 .vscode/
+
+# Lokale geheimen (wrangler pages dev)
+.dev.vars
+.env
+.wrangler/
+node_modules/

@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap">
+<style>
+  :root { --bg: oklch(98.4% 0.005 262); --vlak: oklch(100% 0.002 262); --vlak2: oklch(96.4% 0.010 262); --lijn: oklch(90.5% 0.012 262); --lijn2: oklch(94% 0.010 262);
+    --inkt: oklch(20% 0.010 262); --inkt2: oklch(38% 0.012 262); --inkt3: oklch(53% 0.020 262); --acc: oklch(52% 0.17 262); --acc-zacht: oklch(95% 0.03 262);
+    --ok-bg: oklch(94% 0.045 150); --ok: oklch(38% 0.11 150); --at-bg: oklch(95% 0.05 80); --at: oklch(42% 0.11 80); --nv-bg: oklch(94% 0.012 262); --nv: oklch(48% 0.018 262); }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--inkt); font: 400 15px/1.55 "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif; }
+  a { color: var(--acc); } a:hover { color: oklch(34% 0.12 262); }
+  button { font: inherit; color: inherit; }
+  .scherm { width: 1440px; height: 900px; overflow: hidden; display: flex; flex-direction: column; background: var(--bg); }
+  .kop { height: 68px; flex: none; display: flex; align-items: center; gap: 32px; padding: 0 32px; background: var(--vlak); border-bottom: 1px solid var(--lijn); }
+  .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--inkt); }
+  .mark { display: grid; gap: 3px; width: 24px; } .mark i { display: block; height: 3px; background: var(--inkt); border-radius: 2px; }
+  .mark i:nth-child(2) { width: 80%; } .mark i:nth-child(3) { width: 55%; background: var(--acc); }
+  .brand-t { display: flex; flex-direction: column; } .brand-t strong { font-size: 17px; line-height: 1.15; }
+  .sub { font-size: 11px; color: var(--inkt3); letter-spacing: .03em; }
+  .nav { margin-left: auto; display: flex; gap: 4px; align-items: center; }
+  .nav a { text-decoration: none; color: var(--inkt2); font-size: 14.5px; padding: 7px 12px; border-radius: 6px; display: flex; gap: 8px; align-items: center; }
+  .nav a.actief { background: var(--acc-zacht); color: var(--acc); font-weight: 700; }
+  .proto { font: 500 10.5px/1 "IBM Plex Mono", monospace; text-transform: uppercase; letter-spacing: .04em; padding: 3px 5px; border-radius: 4px; background: var(--vlak2); color: var(--inkt3); border: 1px solid var(--lijn); }
+  .mono { font-family: "IBM Plex Mono", ui-monospace, monospace; }
+  .tag { font: 700 11px/1 "Atkinson Hyperlegible", sans-serif; letter-spacing: .04em; padding: 4px 7px; border-radius: 4px; border: 1px solid var(--lijn); color: var(--inkt2); background: var(--vlak2); }
+  .tag.ow { color: var(--acc); border-color: oklch(80% 0.07 262); background: var(--acc-zacht); }
+  .badge { font-size: 12.5px; font-weight: 700; padding: 3px 8px; border-radius: 4px; display: inline-flex; gap: 6px; }
+  .badge span { font-weight: 400; opacity: .8; }
+  .badge.ok { background: var(--ok-bg); color: var(--ok); } .badge.at { background: var(--at-bg); color: var(--at); } .badge.nv { background: var(--nv-bg); color: var(--nv); }
+  .chips { display: flex; gap: 6px; flex-wrap: wrap; }
+  .chip { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; padding: 3px 9px 3px 7px; border-radius: 99px; background: var(--vlak); border: 1px solid var(--lijn); color: var(--inkt2); }
+  .chip i { width: 9px; height: 9px; border-radius: 50%; display: block; } .chip b { color: var(--inkt); }
+  .kaart { position: relative; overflow: hidden; }
+  .kknoppen { position: absolute; right: 16px; top: 16px; display: flex; flex-direction: column; gap: 8px; }
+  .kk { width: 38px; height: 38px; display: grid; place-items: center; background: var(--vlak); border: 1px solid var(--lijn); border-radius: 6px; color: var(--inkt2); }
+  .kk-groep { display: flex; flex-direction: column; } .kk-groep .kk:first-child { border-radius: 6px 6px 0 0; border-bottom: 0; } .kk-groep .kk:last-child { border-radius: 0 0 6px 6px; }
+</style>
+</helmet>
+<div class="scherm">
+  <header class="kop"><a class="brand" href="#"><span class="mark"><i></i><i></i><i></i></span><span class="brand-t"><strong>Omgevingsdocumentenregister</strong><span class="sub">Onafhankelijk register · geen officiële overheidsbron</span></span></a><nav class="nav"><a href="#" class="actief">Zoeken</a><a href="#">Bronhouders</a><a href="#">Vragenbomen</a><a href="#">Landelijk beeld</a><a href="#">Over</a><a href="#">Regels op maat <span class="proto">prototype</span></a></nav></header>
+  <main style="flex: 1; padding: 34px 32px 0; display: flex; flex-direction: column; gap: 24px; overflow: hidden;">
+    <div style="display: flex; flex-direction: column; gap: 6px;">
+      <h1 style="margin: 0; font-size: 32px; line-height: 1.15; font-weight: 700; letter-spacing: -.01em;">Zoeken in omgevingsdocumenten</h1>
+      <p style="margin: 0; color: var(--inkt2); font-size: 16px;">Alle documenten onder de Omgevingswet, plus de Wro-plannen die onder het overgangsrecht nog gelden.</p>
+    </div>
+    <div style="display: flex; gap: 10px; max-width: 900px;">
+      <div style="flex: 1; display: flex; align-items: center; gap: 10px; height: 48px; padding: 0 14px; background: var(--vlak); border: 1px solid oklch(78% 0.02 262); border-radius: 6px; color: var(--inkt3);"><svg width="19" height="19" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"></circle><path d="M13 13l4.5 4.5"></path></svg><span style="color: var(--inkt); font-size: 16px;">valkenburg</span></div>
+      <button style="height: 48px; padding: 0 24px; border: 0; border-radius: 6px; background: var(--acc); color: white; font-weight: 700; font-size: 15.5px;">Zoeken</button>
+    </div>
+    <div style="display: grid; grid-template-columns: 264px minmax(0, 1fr); gap: 28px; align-items: start;">
+      <aside style="background: var(--vlak); border: 1px solid var(--lijn); border-radius: 8px; padding: 6px 18px 10px;">
+        <fieldset style="border: 0; margin: 0; padding: 12px 0; border-bottom: 1px solid var(--lijn2);">
+          <legend style="font-weight: 700; font-size: 13.5px; padding: 0; margin-bottom: 6px; float: left; width: 100%;">Stelsel</legend>
+          <label style="display: flex; gap: 9px; align-items: center; font-size: 14px; padding: 3.5px 0; clear: both;"><span style="width: 16px; height: 16px; border-radius: 4px; flex: none; border: 1.5px solid var(--acc); background: var(--acc); display: grid; place-items: center; color: white;"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 5.2l2 2 4-4.4"></path></svg></span>Omgevingswet<span class="mono" style="margin-left: auto; font-size: 12px; color: var(--inkt3);">9</span></label><label style="display: flex; gap: 9px; align-items: center; font-size: 14px; padding: 3.5px 0; clear: both;"><span style="width: 16px; height: 16px; border-radius: 4px; flex: none; border: 1.5px solid var(--acc); background: var(--acc); display: grid; place-items: center; color: white;"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 5.2l2 2 4-4.4"></path></svg></span>Wro (overgangsrecht)<span class="mono" style="margin-left: auto; font-size: 12px; color: var(--inkt3);">3</span></label>
+        </fieldset><fieldset style="border: 0; margin: 0; padding: 12px 0; border-bottom: 1px solid var(--lijn2);">
+          <legend style="font-weight: 700; font-size: 13.5px; padding: 0; margin-bottom: 6px; float: left; width: 100%;">Bestuurslaag</legend>
+          <label style="display: flex; gap: 9px; align-items: center; font-size: 14px; padding: 3.5px 0; clear: both;"><span style="width: 16px; height: 16px; border-radius: 4px; flex: none; border: 1.5px solid oklch(76% 0.02 262); background: var(--vlak); display: grid; place-items: center; color: white;"></span>Gemeente<span class="mono" style="margin-left: auto; font-size: 12px; color: var(--inkt3);">7</span></label><label style="display: flex; gap: 9px; align-items: center; font-size: 14px; padding: 3.5px 0; clear: both;"><span style="width: 16px; height: 16px; border-radius: 4px; flex: none; border: 1.5px solid oklch(76% 0.02 262); background: var(--vlak); display: grid; place-items: center; color: white;"></span>Provincie<span class="mono" style="margin-left: auto; font-size: 12px; color: var(--inkt3);">2</span></label><label style="display: flex; gap: 9px; align-items: center; font-size: 14px; padding: 3.5px 0; clear: both;"><span style="width: 16px; height: 16px; border-radius: 4px; flex: none; border: 1.5px solid oklch(76% 0.02 262); background: var(--vlak); display: grid; place-items: center; color: white;"></span>Waterschap<span class="mono" style="margin-left: auto; font-size: 12px; color: var(--inkt3);">2</span></label><label style="display: flex; gap: 9px; align-items: center; font-size: 14px; padding: 3.5px 0; clear: both;"><span style="width: 16px; height: 16px; border-radius: 4px; flex: none; border: 1.5px solid oklch(76% 0.02 262); background: var(--vlak); display: grid; place-items: center; color: white;"></span>Rijk<span class="mono" style="margin-left: auto; font-size: 12px; color: var(--inkt3);">1</span></label>
+        </fieldset><fieldset style="border: 0; margin: 0; padding: 12px 0; border-bottom: 1px solid var(--lijn2);">
+          <legend style="font-weight: 700; font-size: 13.5px; padding: 0; margin-bottom: 6px; float: left; width: 100%;">Documenttype</legend>
+          <label style="display: flex; gap: 9px; align-items: center; font-size: 14px; padding: 3.5px 0; clear: both;"><span style="width: 16px; height: 16px; border-radius: 4px; flex: none; border: 1.5px solid oklch(76% 0.02 262); background: var(--vlak); display: grid; place-items: center; color: white;"></span>Omgevingsplan<span class="mono" style="margin-left: auto; font-size: 12px; color: var(--inkt3);">1</span></label><label style="display: flex; gap: 9px; align-items: center; font-size: 14px; padding: 3.5px 0; clear: both;"><span style="width: 16px; height: 16px; border-radius: 4px; flex: none; border: 1.5px solid oklch(76% 0.02 262); background: var(--vlak); display: grid; place-items: center; color: white;"></span>Omgevingsverordening<span class="mono" style="margin-left: auto; font-size: 12px; color: var(--inkt3);">1</span></label><label style="display: flex; gap: 9px; align-items: center; font-size: 14px; padding: 3.5px 0; clear: both;"><span style="width: 16px; height: 16px; border-radius: 4px; flex: none; border: 1.5px solid oklch(76% 0.02 262); background: var(--vlak); display: grid; place-items: center; color: white;"></span>Omgevingsvisie<span class="mono" style="margin-left: auto; font-size: 12px; color: var(--inkt3);">2</span></label><label style="display: flex; gap: 9px; align-items: center; font-size: 14px; padding: 3.5px 0; clear: both;"><span style="width: 16px; height: 16px; border-radius: 4px; flex: none; border: 1.5px solid oklch(76% 0.02 262); background: var(--vlak); display: grid; place-items: center; color: white;"></span>Bestemmingsplan<span class="mono" style="margin-left: auto; font-size: 12px; color: var(--inkt3);">3</span></label>
+        </fieldset>
+      </aside>
+      <section style="display: flex; flex-direction: column; gap: 10px;">
+        <div style="display: flex; align-items: baseline; gap: 12px; padding-bottom: 4px;"><span style="font-size: 15px; color: var(--inkt2);"><b style="font-size: 20px; color: var(--inkt);">12</b> documenten</span><span class="chip" style="font-size: 12.5px;">Omgevingswet ✕</span><span class="chip" style="font-size: 12.5px;">Wro ✕</span></div>
+        <article style="background: var(--vlak); border: 1px solid var(--lijn); border-radius: 8px; padding: 14px 18px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 20px; align-items: start;">
+          <div style="display: flex; gap: 10px; align-items: center;"><span class="tag ow">Ow</span><a href="#" style="font-size: 17px; font-weight: 700; text-decoration: none;">Omgevingsplan gemeente Valkenburg aan de Geul</a></div>
+          <div style="grid-row: span 2; align-self: center;"><span class="badge at"><span>Annotaties</span>matig</span></div>
+          <div style="font-size: 13.5px; color: var(--inkt2); display: flex; gap: 14px;">Gemeente Valkenburg aan de Geul · omgevingsplan<span class="mono" style="font-size: 12px; color: var(--inkt3);">/akn/nl/act/gm0994/…</span></div>
+        </article><article style="background: var(--vlak); border: 1px solid var(--lijn); border-radius: 8px; padding: 14px 18px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 20px; align-items: start;">
+          <div style="display: flex; gap: 10px; align-items: center;"><span class="tag ow">Ow</span><a href="#" style="font-size: 17px; font-weight: 700; text-decoration: none;">Omgevingsverordening Limburg</a></div>
+          <div style="grid-row: span 2; align-self: center;"><span class="badge ok"><span>Annotaties</span>goed</span></div>
+          <div style="font-size: 13.5px; color: var(--inkt2); display: flex; gap: 14px;">Provincie Limburg · omgevingsverordening<span class="mono" style="font-size: 12px; color: var(--inkt3);">/akn/nl/act/pv31/…</span></div>
+        </article><article style="background: var(--vlak); border: 1px solid var(--lijn); border-radius: 8px; padding: 14px 18px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 20px; align-items: start;">
+          <div style="display: flex; gap: 10px; align-items: center;"><span class="tag">Wro</span><a href="#" style="font-size: 17px; font-weight: 700; text-decoration: none;">Bestemmingsplan Kern Valkenburg</a></div>
+          <div style="grid-row: span 2; align-self: center;"><span class="badge nv"><span>Ponsstatus</span>niet gepons</span></div>
+          <div style="font-size: 13.5px; color: var(--inkt2); display: flex; gap: 14px;">Gemeente Valkenburg aan de Geul · bestemmingsplan<span class="mono" style="font-size: 12px; color: var(--inkt3);">NL.IMRO.0994.…</span></div>
+        </article><article style="background: var(--vlak); border: 1px solid var(--lijn); border-radius: 8px; padding: 14px 18px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 20px; align-items: start;">
+          <div style="display: flex; gap: 10px; align-items: center;"><span class="tag ow">Ow</span><a href="#" style="font-size: 17px; font-weight: 700; text-decoration: none;">Omgevingsvisie Valkenburg aan de Geul</a></div>
+          <div style="grid-row: span 2; align-self: center;"></div>
+          <div style="font-size: 13.5px; color: var(--inkt2); display: flex; gap: 14px;">Gemeente Valkenburg aan de Geul · omgevingsvisie<span class="mono" style="font-size: 12px; color: var(--inkt3);">/akn/nl/act/gm0994/…</span></div>
+        </article><article style="background: var(--vlak); border: 1px solid var(--lijn); border-radius: 8px; padding: 14px 18px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 20px; align-items: start;">
+          <div style="display: flex; gap: 10px; align-items: center;"><span class="tag ow">Ow</span><a href="#" style="font-size: 17px; font-weight: 700; text-decoration: none;">Waterschapsverordening Waterschap Limburg</a></div>
+          <div style="grid-row: span 2; align-self: center;"><span class="badge ok"><span>Annotaties</span>goed</span></div>
+          <div style="font-size: 13.5px; color: var(--inkt2); display: flex; gap: 14px;">Waterschap Limburg · waterschapsverordening<span class="mono" style="font-size: 12px; color: var(--inkt3);">/akn/nl/act/ws…/…</span></div>
+        </article>
+      </section>
+    </div>
+  </main>
+</div>
+</x-dc>
+</body>
+</html>
