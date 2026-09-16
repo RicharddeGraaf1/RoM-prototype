@@ -1,5 +1,11 @@
 # RoM-prototype — projectconventies
 
+> **De live code woont sinds 2026-09-16 in `omgevingsdocumentenregister.nl/public/regels-op-maat/`.**
+> Wijzigingen aan Regels op maat gaan dáár, met de conventies van het register. Deze repo
+> houdt het realisatieplan, de ontwerpbestanden, `tools/` en de statische demo; `public/`
+> is alleen nog een 301 naar het register. Onderstaande tekst beschrijft de losse site zoals
+> die tot commit `64b0e27` bestond.
+
 Regels op maat: welke regels gelden op een locatie. De live site staat in `public/`,
 de proxy naar OCD in `functions/api`. Plan en fasen: [docs/REALISATIEPLAN.md](docs/REALISATIEPLAN.md).
 

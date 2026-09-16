@@ -5,7 +5,14 @@ omgevingsdocumenten die daar gelden, per onderwerp, tot op het lid van een artik
 met het perceel op de kaart. In huisstijl **C · Document en interface**, als
 zelfstandige site naast [omgevingsdocumentenregister.nl](https://omgevingsdocumentenregister.nl).
 
-**Twee generaties in deze repo:**
+> **Verhuisd (2026-09-16).** De live site staat nu in het register:
+> [omgevingsdocumentenregister.nl/regels-op-maat](https://omgevingsdocumentenregister.nl/regels-op-maat/),
+> code in `omgevingsdocumentenregister.nl/public/regels-op-maat/`. Dit subdomein
+> (`rom.omgevingsdocumentenregister.nl`) stuurt daarheen door. `public/` bevat hier alleen die
+> doorverwijzing; de laatste versie van de losse site staat in commit `64b0e27`.
+> Het [realisatieplan](docs/REALISATIEPLAN.md) blijft hier.
+
+**Twee generaties in deze repo** (stand vóór de verhuizing):
 
 | | Live site (`public/`) | Statische demo (repo-root) |
 |---|---|---|
