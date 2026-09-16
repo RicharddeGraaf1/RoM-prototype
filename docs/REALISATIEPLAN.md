@@ -6,27 +6,40 @@
 
 ## Stand van uitvoering
 
-Bijgewerkt 2026-09-16. Lokaal gebouwd en getest (`wrangler pages dev` tegen productie-OCD), **nog niet gecommit of online**.
+Bijgewerkt 2026-09-16. **Live op https://rom.omgevingsdocumentenregister.nl** (Pages-project
+`rom-prototype`, Git-gekoppeld; commit `85dd138`).
 
 | Fase | Stand | Nog open |
 |---|---|---|
-| 0 · Stijl C als bouwsteen | ✅ `public/stijl.css`: tokens, donkere variant, bouwstenen; `--ocd-*` gezet voor de regeltekst-component | Het register laadt het bestand nog niet (dat is het parallelle spoor) |
-| 1 · Online in stijl C | ◐ Repo-indeling (`public/`, `functions/`, `wrangler.toml`), `_headers` met CSP, disclaimer in kop en voet | Pages-project + subdomein + geheim `OCD_API_KEY_PUBLIC`; menu-item in het register zodra het domein bestaat. De statische Broekhem-variant is **niet** apart in stijl C gezet: fase 3 maakte hem overbodig |
-| 2 · Echte kaart | ✅ OpenLayers 10.10 gevendord, RD zonder proj4, PDOK BRT grijs, perceel + punt, klik = nieuwe locatie | Werkingsgebieden (fase 5) |
-| 3 · Elke locatie, live | ✅ PDOK suggest/lookup/reverse (adres én perceel), proxy-whitelist, documenten in vier groepen (lokaal · Wro · beleid · Rijk), structuur uit `/boom` met hoofdstuk- en afdelingstitels, leden via `ocd-regeltekst`, Juridisch/Begrijpelijk, locatie in de URL | Handmatige toets tegen Regels op de kaart |
-| 4 · Onderwerp-chips | ✅ Besluit **A** (indeling van het register), zonder OCD-wijziging: `/onderwerpen` per document ∩ de artikelen op het punt, client-side. Chips per document, filter binnen een document, "niet ingedeeld" zichtbaar | — |
+| 0 · Stijl C als bouwsteen | ✅ `public/stijl.css`: tokens, donkere variant, bouwstenen; `--ocd-*` gezet voor de regeltekst-component | Het register laadt het bestand nog niet → fase 5 |
+| 1 · Online in stijl C | ✅ `public/` + `functions/` + `wrangler.toml`, CSP, disclaimer; Pages-project met geheim `OCD_API_KEY_PUBLIC`, subdomein actief | Menu-item in het register → fase 5. De statische Broekhem-variant is niet apart omgezet: fase 3 maakte hem overbodig |
+| 2 · Echte kaart | ✅ OpenLayers 10.10 gevendord, RD zonder proj4, PDOK BRT grijs, perceel + punt, klik = nieuwe locatie | Werkingsgebieden → fase 8 |
+| 3 · Elke locatie, live | ✅ PDOK suggest/lookup/reverse (adres én perceel), proxy-whitelist, documenten in vier groepen (lokaal · Wro · beleid · Rijk), structuur uit `/boom`, leden via `ocd-regeltekst`, Juridisch/Begrijpelijk, locatie in de URL | Handmatige toets tegen Regels op de kaart |
+| 4 · Onderwerp-chips | ✅ Indeling van het register (`/onderwerpen`) ∩ artikelen op het punt, client-side, zonder OCD-wijziging. Chips per document, filter binnen een document, "niet ingedeeld" zichtbaar | Onderwerpen óver documenten heen, met iconen → fase 6 |
+| 5 · Register naar stijl C | ⬜ | |
+| 6 · Onderwerpen op deze locatie, met iconen | ⬜ | |
+| 7 · De vraag | ⬜ | |
+| 8 · Werkingsgebied bij het artikel | ⬜ | |
+| 9 · Infopaneel | ⬜ | |
+
+**Volgorde vanaf fase 5** is gekozen door de gebruiker op 2026-09-16: eerst het register in
+dezelfde stijl, dan de onderwerpen met iconen, dan de vraag, dan het werkingsgebied, dan het
+infopaneel.
 
 Getest op Broekhem 33 (Valkenburg), Dam 1 (Amsterdam), Bergstraat 4 (Ede), Grote Markt 1
 (Groningen), een kaartklik en 400 px breed. Het Bal (2.441 artikelen op het punt) opent in ~2 s.
 
 **Afwijking van het plan in fase 4:** de categorieën van het register zijn direct als chip
 gebruikt, zonder mapping naar een handvol brede thema's. Dat houdt register en RoM
-één-op-één gelijk; de prijs is meer chips per document (tot ~12).
+één-op-één gelijk; de prijs is meer chips per document (tot ~12). De mapping naar
+bezoekersonderwerpen komt terug in fase 6.
 
 **Bevindingen onderweg**
 - `/v1/viewer/regeling/{expr}/boom` levert per lid al de annotaties (activiteiten,
-  gebiedsaanwijzingen, normwaarden). Het kenmerkenpaneel van fase 6 heeft daardoor mogelijk
+  gebiedsaanwijzingen, normwaarden). Het infopaneel van fase 9 heeft daardoor mogelijk
   **geen nieuw OCD-endpoint** nodig. ⚠️ Te verifiëren of dat voor alle regelingen gevuld is.
+- De documentenlijst per locatie bevat al voorbereidingsbesluiten en voorbeschermingsregels
+  (gezien bij Amsterdam en Groningen). Zie open besluit 3.
 - De Limburgse omgevingsverordening heet in `regelmix` "Wijzigingsverordening 2024 Om" — het
   opschrift van de geconsolideerde regeling lijkt niet te kloppen. ⚠️ Te verifiëren in OCD
   (`p2p.regeling.opschrift`), niet in RoM oplossen.
@@ -170,60 +183,154 @@ en apart op te lossen gat: classificeer de wijzigingstekst zelf.
 **OCD-werk:** `/onderwerpen` gefilterd op de wids die op het punt gelden, of een variant
 `/v1/viewer/regelmix/document` die de categorie per artikel meegeeft.
 
-### Fase 5 — Werkingsgebied bij het artikel · middel, OCD-endpoint
+### Fase 5 — Het register naar stijl C · middel
 
-**Wat je ziet:** open je een artikel, dan licht op de kaart het gebied op waar het geldt.
+**Wat je ziet:** omgevingsdocumentenregister.nl en Regels op maat zijn herkenbaar één familie.
+Het krantachtige verdwijnt uit het register: geen Newsreader-koppen, geen papierkorrel, geen
+dikke inktlijnen. De interface wordt sans-serif op een koelgrijze grond; documenttitels en
+leestekst staan op witte bladen in Source Serif 4. In het menu staat "Regels op maat · prototype".
+
+**Aanpak: eerst de tokens, dan per scherm.**
+
+1. **Tokens omleggen, in één stap voor de hele site.** Het register laadt `stijl.css` en zijn
+   eigen rollen worden aliassen: `--paper` → `--grond`, `--ink` → `--inkt`, `--rule` → `--lijn`,
+   `--accent`/`--link` → `--acc`, en de statuskleuren worden gelijkgetrokken. `h1–h3` gaan van
+   serif naar sans; de serif blijft alleen voor documenttitels en `.leestekst`. Papierkorrel en
+   2px-lijnen gaan eruit. Na deze stap is elk scherm al grotendeels stijl C, zonder dat er een
+   regel JavaScript verandert.
+2. **Per scherm afmaken**, meest bezochte schermen eerst:
+
+   | Scherm | Route | Wat verandert |
+   |---|---|---|
+   | Zoeken | `/`, `/zoeken` | Facetten als rail links, treffers als bladen met serif-titel, lensoordelen als badges rechts (zoals in het ontwerp) |
+   | Documentdetail | `/document/…` | Boom als interface-rail, leestekst op een blad in serif, GIO-paneel als paneel met schaduw |
+   | Bronhouders | `/bronhouders`, `/bronhouders/{code}` | Tabellen en kpi-tegels in interface-stijl, cijfers in mono |
+   | Landelijk beeld | `/landelijk-beeld` | Idem; staafjes in het accent |
+   | Vragenbomen | `/vragenbomen/…` | Stappen als bladen; dragende artikelen in serif |
+   | Over | `/over-het-register` | Lopende tekst op een blad |
+
+3. **Kop en voet** gelijk aan RoM: merkteken als blad, navigatie rechts. De themaknop blijft (het
+   register heeft `data-theme` al; `stijl.css` ondersteunt het).
+4. **Menu-item** "Regels op maat · prototype" → `https://rom.omgevingsdocumentenregister.nl`.
+
+**Werkwijze:** een push naar `main` van het register gaat direct live. Daarom op een branch
+`stijl-c`. Het Pages-project bouwt previews voor alle branches, dus elk scherm is eerst op de
+preview-URL te bekijken (licht, donker, 1440 en 400 px breed) voordat het naar `main` gaat.
+Hoog bij elke CSS- of JS-wijziging de `?v=`-token op.
+
+**Klaar als:** alle routes in stijl C staan, in licht en donker, zonder horizontaal scrollen op
+400 px, en het menu-item werkt.
+
+### Fase 6 — Onderwerpen op deze locatie, met iconen · middel
+
+**Wat je ziet** (mockups scherm-03, -04 en -11): na het kiezen van een locatie verschijnt eerst
+een tussenscherm **"Waar bent u naar op zoek?"** met het vraagveld (fase 7) en daaronder een
+raster **"Onderwerpen op deze locatie"**. Per onderwerp staan er een icoon, een naam en het
+aantal regels dat hier geldt. Klik je een onderwerp aan, dan zie je de regels over dat onderwerp
+**over alle documenten heen**, en staat het onderwerp als zoekvraag in de balk bovenin. Je kunt
+altijd terug naar het tussenscherm; het huidige overzicht met alle documenten blijft bereikbaar.
+
+- **Bezoekersonderwerpen.** De 21 categorieën van het register zijn te fijn en te vakmatig voor
+  een tegelraster ("procedures", "infrastructuur"). Er komt een vaste mapping van categorie (en
+  waar nodig subcategorie) naar een handvol onderwerpen in de taal van de bezoeker, vastgelegd in
+  `public/thema.js`. De mockup noemt *Wonen & verbouwen, Bedrijfsmatige activiteiten, Natuur,
+  Openbare ruimte, Geluid en hinder*; de definitieve lijst is een besluit (open besluit 4). Het
+  register blijft de bron: de mapping groepeert alleen, ze deelt niet opnieuw in.
+- **Iconen.** Een eigen set in inline SVG, lijngetekend op een 20px-raster, passend bij stijl C.
+  De DSO-iconen nemen we niet over. Eén icoon per bezoekersonderwerp, plus één voor "niet
+  ingedeeld". Dezelfde iconen komen terug in de chips op de documentkaarten.
+- **Tellen over documenten heen.** Nu worden alleen de lokale Ow-documenten vooraf geanalyseerd.
+  Voor het raster moeten alle lokale documenten klaar zijn voordat de tellingen kloppen.
+  Landelijke regels (het Bal: 2.441 artikelen op het punt) tellen **apart** of pas op verzoek,
+  anders duurt het tussenscherm te lang. Wro-plannen zijn niet ingedeeld en tellen niet mee;
+  dat staat er ook bij.
+- **Resultaat per onderwerp:** dezelfde documentkaarten, maar voorgefilterd, en alleen documenten
+  met minstens één artikel in het onderwerp. De URL krijgt `&onderwerp=…`, zodat het resultaat
+  deelbaar is.
+- **OCD-werk:** geen. Blijkt het tellen bij grote omgevingsplannen te traag, dan later één
+  endpoint dat per punt de telling per categorie teruggeeft.
+
+**Klaar als:** bij Broekhem 33, Dam 1 en Grote Markt 1 het raster binnen ~3 s staat, de aantallen
+kloppen met de chips op de documentkaarten, en een klik een gefilterd resultaat over meerdere
+documenten geeft.
+
+### Fase 7 — De vraag · groot
+
+**Wat je ziet:** in het tussenscherm typ je "mag ik een aanbouw bouwen?". Het resultaat heet
+**"Gevonden voor uw vraag"**: alleen de documenten en artikelen die erover gaan, de meest
+relevante bovenaan, met de vraag bewerkbaar in de balk bovenin.
+
+- **Stap 1, zonder AI (eerst bouwen):** de vraag wordt herkend als activiteit en/of onderwerp.
+  "Aanbouw" → bouwactiviteit, via de SKOS-activiteit-as (gecureerde trefwoorden zoals dakkapel
+  en betegelen). Kandidaat is `GET /v1/regels?x&y&keywords` (FTS plus trefwoorden, staat al in
+  OCD). ⚠️ Te verifiëren welk endpoint de SKOS-trefwoorden het best ontsluit en of het per
+  artikel-wid teruggeeft; zo nodig komt er één klein OCD-endpoint bij.
+- **Stap 2, met embeddings:** `POST /v1/semantisch`, beperkt tot de locatie. Dat helpt bij
+  normvragen ("hoe hoog mag…"), waar SKOS niets vindt. Voorwaarde: de embedding-service op
+  Railway draait en gebruikt hetzelfde model als de index, anders gaat de kwaliteit ongemerkt
+  achteruit. ⚠️ Eerst verifiëren; zonder werkende service blijft het bij stap 1.
+- **Een klik op een onderwerp (fase 6) is een vraag zonder tekst:** hetzelfde resultaatscherm,
+  één codepad.
+- **Geen gegenereerd antwoord.** RoM toont regels en geeft geen oordeel, en zegt dat ook in de
+  interface.
+- URL: `&vraag=…`.
+
+**Klaar als:** een vooraf opgeschreven set van ~15 vragen op 3 locaties de juiste artikelen in de
+top 5 heeft. Gemeten, niet op gevoel.
+
+### Fase 8 — Werkingsgebied bij het artikel · middel, OCD-endpoint
+
+**Wat je ziet:** open je een artikel, dan licht op de kaart het gebied op waar het geldt
+(mockup scherm-05/-06: het gele vlak).
 
 - Nieuw OCD-endpoint, bijvoorbeeld `GET /v1/viewer/rom/werkingsgebieden?x&y&expr`: per artikel-wid
-  de gebiedsaanwijzingen en locaties, met vereenvoudigde geometrie in RD. De SQL staat al in
-  `tools/build_geo.py` (via `juridische_regel` → `juridische_regel_gebiedsaanwijzing` →
-  `locatie_subdiv`). Die hoeft alleen van offline naar een endpoint te verhuizen.
-- Provinciebrede gebieden die het hele beeld vullen tonen als rand, niet als vlak. Die regel
-  staat al in `build_geo.py`.
-- Artikelen zónder gebiedsaanwijzing (heel Valkenburg) krijgen de tekst "geldt in het hele
-  regelingsgebied". Geen leeg gebied tonen.
+  de gebiedsaanwijzingen en locaties, met vereenvoudigde geometrie in RD, geclipt rond het punt.
+  De SQL staat al in `tools/build_geo.py` (via `juridische_regel` →
+  `juridische_regel_gebiedsaanwijzing` → `locatie_subdiv`) en verhuist naar een endpoint. Een
+  OCD-push is een productie-deploy, dus dit komt in een aparte, kleine commit.
+- Provinciebrede gebieden die het hele beeld vullen tonen we als rand, niet als vlak (die regel
+  staat al in `build_geo.py`).
+- Artikelen zonder eigen gebied (zoals in Valkenburg): "geldt in het hele regelingsgebied".
+  Geen leeg gebied tonen.
+- De proxy-whitelist krijgt precies dit endpoint erbij.
 
 **Klaar als:** bij Broekhem 33 de Omgevingsverordening en de Waterschapsverordening gebieden
-oplichten, en het omgevingsplan dat eerlijk niet doet.
+laten oplichten, en het omgevingsplan dat eerlijk niet doet.
 
-### Fase 6 — Het infopaneel · middel, OCD-endpoints
+### Fase 9 — Het infopaneel · middel
 
-**Wat je ziet:** de drie tabbladen uit het ontwerp.
+**Wat je ziet** (mockups scherm-08 t/m -10 en -12): de ⓘ bij een artikel opent een paneel tussen
+de lijst en de kaart, met drie tabbladen.
 
-- **Kenmerken**: type regel, activiteit, functies, normen en normwaarden. Nieuw endpoint op basis van
-  de joins uit `build_data.py`. Is het leeg, dan staat er "niet geannoteerd in dit plan".
-- **Toelichting**: de artikelsgewijze toelichting bij het artikel. Er is nog geen endpoint, en
-  ⚠️ te verifiëren is hoe betrouwbaar de koppeling tussen artikel en toelichting in de data is.
-  Zonder betrouwbare koppeling blijft dit tabblad weg.
-- **Beperkingen**: `/v1/leefomgeving/readout` (extern, geluid), met een schakelaar per laag op
-  de kaart. Bij de bron zetten dat het RIVM/PDOK is en geen DSO-regel.
-
-### Fase 7 — De vraag · groot, afhankelijk van infrastructuur
-
-**Wat je ziet:** "mag ik een aanbouw bouwen?" zet de relevante artikelen bovenaan.
-
-- **Stap 1, zonder AI:** de vraag filtert op thema en trefwoorden, via de SKOS-activiteit-as.
-  "Aanbouw" → bouwactiviteit. Dat is goedkoop en werkt meteen.
-- **Stap 2, met embeddings:** `/v1/semantisch`, beperkt tot de locatie. Die helpt juist bij
-  norm-vragen ("hoe hoog mag…"), waar SKOS blind is. Voorwaarde: de embedding-service op
-  Railway draait en gebruikt hetzelfde model als de index.
-- **Geen gegenereerd antwoord** in dit traject. RoM toont regels en geeft geen oordeel.
-
-## Parallel spoor — het register naar stijl C
-
-Los van RoM, maar met hetzelfde stijlbestand uit fase 0: Newsreader, de papierkorrel en de
-2px-inktlijnen verdwijnen; bladen en panelen komen ervoor in de plaats. Doe het per scherm
-(zoeken → documentdetail → bronhouders → landelijk beeld), en elke keer de `?v=`-token ophogen.
-Pas beginnen als fase 1 staat, zodat de stijl zich eerst op RoM bewijst.
+- **Kenmerken:** type regel, activiteit, "dit artikel geldt in" (met een schakelaar naar de
+  kaart, uit fase 8), gebiedsaanwijzingen zoals functie (met schakelaar) en omgevingsnormen met
+  de waarde **op de gekozen locatie** ("maximum bouwhoogte: 180 m"). Bron: de annotaties per lid
+  in `/boom`, dus mogelijk geen nieuw endpoint (⚠️ dekking verifiëren); de normwaarden op het
+  punt komen uit `/v1/viewer/objecten?x&y`. Is het leeg, dan staat er "niet geannoteerd in dit
+  plan".
+- **Beperkingen:** `/v1/leefomgeving/readout?x&y` (externe veiligheid, geluid) met een schakelaar
+  per laag, plus een sectie **"Mogelijke beperkingen"** onder de regels in de lijst. Duidelijk
+  vermelden dat de bron RIVM/PDOK is en geen DSO-regel.
+- **Toelichting:** de artikelsgewijze toelichting. Daar is nog geen endpoint voor, en ⚠️ te
+  verifiëren is hoe betrouwbaar de koppeling tussen artikel en toelichting in de data is. Zonder
+  betrouwbare koppeling blijft dit tabblad weg.
 
 ## Open besluiten
 
-1. **Subdomein of pad?** Het voorstel is `rom.omgevingsdocumentenregister.nl`.
-2. **Thema-as** (fase 4): A (onderwerp-as van het register) of B (embeddings). Advies A.
-3. **Geolocatie toestaan** (fase 3): nu staat `geolocation=()` in het register.
-4. **Toelichting** (fase 6): alleen bouwen als de koppeling betrouwbaar blijkt.
-5. **Scope-grens**: het register toont alleen de geldende situatie. Toont RoM ook ontwerpbesluiten
-   en voorbereidingsbesluiten? De mockup laat "voorbereidingsbescherming" zien. Dat botst met die grens.
+Besloten op 2026-09-16: subdomein `rom.omgevingsdocumentenregister.nl`; thema-as A (de indeling
+van het register); volgorde van fase 5 t/m 9.
+
+1. **Waar staat `stijl.css` canoniek?** (fase 5) Advies: in het **register**, want dat is de
+   koepel. RoM houdt een kopie met de kopregel "canoniek in omgevingsdocumentenregister.nl",
+   net als bij `ocd-regeltekst.js`. Niet cross-origin laden: dat koppelt de caches en de CSP
+   van twee sites.
+2. **Geolocatie toestaan** ("mijn locatie")? Nu staat `geolocation=()` in beide sites.
+3. **Scope-grens:** het register toont alleen de geldende situatie; RoM toont nu al
+   voorbereidingsbesluiten en voorbeschermingsregels. Zo laten (en als aparte groep tonen), of
+   gelijktrekken met het register?
+4. **Bezoekersonderwerpen** (fase 6): welke 5–8 onderwerpen, en welke categorieën vallen eronder?
+   Eerst een voorstel op basis van de tellingen op een paar locaties, dan kiezen.
+5. **Toelichting** (fase 9): alleen bouwen als de koppeling betrouwbaar blijkt.
 
 ## Bekende valkuilen
 
