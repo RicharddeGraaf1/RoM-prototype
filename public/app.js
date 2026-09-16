@@ -308,9 +308,49 @@
     });
   }
 
-  function toonDocumenten(docs, nr) {
+  // ── Voorbeschermingsregels bij hun document ──────────
+  // Voorbeschermingsregels (uit een voorbereidingsbesluit) gelden nu al, maar
+  // zijn geen zelfstandig document: ze vullen het omgevingsplan of de
+  // omgevingsverordening aan. Het DSO toont ze daarom bij dat document, en RoM
+  // ook (gebruikersbesluit 2026-09-16). Dat geldt ongeacht wie ze vaststelde:
+  // voorbeschermingsregels van provincie of Rijk horen bij het omgevingsplan.
+  function isVoorbescherming(d) {
+    return d.bron_type === 'ow' && /^voorbeschermingsregels/i.test(d.documenttype || '');
+  }
+
+  /** Welk documenttype vult dit aan? Het documenttype zegt het meestal zelf;
+   *  bij kaal "Voorbeschermingsregels" beslissen de titel en dan de bestuurslaag.
+   *  ⚠️ Die laatste stap is een aanname: een provinciaal voorbereidingsbesluit
+   *  kan ook voor een omgevingsplan zijn. Daarom staat de vaststeller erbij. */
+  function ouderType(d) {
+    var t = (d.documenttype || '').toLowerCase();
+    if (t.indexOf('omgevingsverordening') >= 0) return 'Omgevingsverordening';
+    if (t.indexOf('omgevingsplan') >= 0) return 'Omgevingsplan';
+    if (/omgevingsverordening/i.test(d.regeling || '')) return 'Omgevingsverordening';
+    if (/omgevingsplan/i.test(d.regeling || '')) return 'Omgevingsplan';
+    return d.bestuurslaag === 'provincie' ? 'Omgevingsverordening' : 'Omgevingsplan';
+  }
+
+  function bronhouderVan(d) { return String(d.bron_id || '').split('/')[4] || ''; }
+
+  /** Hangt voorbeschermingsregels onder hun document; geeft de hoofdlijst terug. */
+  function koppelAanvullend(docs) {
+    var hoofd = [], los = [];
+    docs.forEach(function (d) { (isVoorbescherming(d) ? los : hoofd).push(d); });
+    los.forEach(function (v) {
+      var type = ouderType(v);
+      var kandidaten = hoofd.filter(function (d) { return d.bron_type === 'ow' && d.documenttype === type; });
+      var ouder = kandidaten.filter(function (d) { return bronhouderVan(d) === bronhouderVan(v); })[0] || kandidaten[0];
+      if (ouder) (ouder.aanvullend = ouder.aanvullend || []).push(v);
+      else hoofd.push(v);   // geen document om bij te hangen: los tonen, niet weglaten
+    });
+    return hoofd;
+  }
+
+  function toonDocumenten(alleDocs, nr) {
     var doel = $('resultaat');
     leeg(doel);
+    var docs = koppelAanvullend(alleDocs);
     $('context-telling').textContent = docs.length === 1 ? '1 document' : nl(docs.length) + ' documenten';
 
     if (!docs.length) {
@@ -345,7 +385,9 @@
       el('span', { class: 'doc-meta' }, [
         el('span', { class: 'tag' + (isWro ? '' : ' tag-ow'), text: isWro ? 'Wro' : 'Ow' }),
         el('span', { text: hoofdletter(doc.documenttype || '') + ' · ' + hoofdletter(doc.bestuurslaag || '') }),
-        el('span', { class: 'mono', text: nl(doc.aantal) + ' ' + eenheid })
+        el('span', { class: 'mono', text: nl(doc.aantal) + ' ' + eenheid }),
+        doc.aanvullend ? el('span', { class: 'tag tag-aanvullend', text:
+          '+ ' + (doc.aanvullend.length === 1 ? 'aanvullende regels' : doc.aanvullend.length + '× aanvullende regels') }) : null
       ]),
       chips
     ]);
@@ -364,10 +406,10 @@
     // gaat de vraag van de bezoeker meestal over. Landelijke regels pas bij openklappen.
     if (!isWro && groep === 'lokaal') {
       chips.appendChild(el('span', { class: 'muted', style: 'font-size:12px', text: 'onderwerpen ophalen…' }));
-      analyseer(doc).then(function (a) {
+      Promise.all(delenVan(doc).map(analyseer)).then(function (lijst) {
         if (nr !== staat.volgnr) return;
         leeg(chips);
-        kopChips(a).forEach(function (c) { chips.appendChild(c); });
+        kopChips(voegSamen(lijst)).forEach(function (c) { chips.appendChild(c); });
       }).catch(function () { leeg(chips); });
     } else if (isWro) {
       chips.appendChild(el('span', { class: 'muted', style: 'font-size:12px', text: 'Wro-plannen zijn niet op onderwerp ingedeeld' }));
@@ -460,6 +502,25 @@
     ];
   }
 
+  /** Aanvullende regels eerst, zoals in het DSO en de mockup; dan de hoofdregeling. */
+  function delenVan(doc) { return (doc.aanvullend || []).concat([doc]); }
+
+  /** Tellingen van meerdere analyses (hoofdregeling + aanvullende regels) samen. */
+  function voegSamen(lijst) {
+    var tel = {}, niet = 0, totaal = 0, indeling = false;
+    lijst.forEach(function (a) {
+      totaal += a.artikelen.length;
+      niet += a.nietIngedeeld;
+      if (a.heeftIndeling) indeling = true;
+      a.categorieen.forEach(function (c) { tel[c.naam] = (tel[c.naam] || 0) + c.aantal; });
+    });
+    return {
+      totaal: totaal, nietIngedeeld: niet, heeftIndeling: indeling,
+      categorieen: Object.keys(tel).sort(function (a, b) { return tel[b] - tel[a]; })
+        .map(function (c) { return { naam: c, aantal: tel[c] }; })
+    };
+  }
+
   function kopChips(a) {
     if (!a.heeftIndeling) {
       return [el('span', { class: 'muted', style: 'font-size:12px', text: 'Nog niet op onderwerp ingedeeld' })];
@@ -478,11 +539,16 @@
   function vulDocument(doc, groep, body, nr) {
     leeg(body);
     body.appendChild(el('p', { class: 'laden', text: 'Artikelen ophalen…' }));
-    var structuur = (doc.bron_type === 'ow' && groep !== 'rijk') ? haalBoom(doc.bron_id) : Promise.resolve(null);
-    Promise.all([analyseer(doc), structuur]).then(function (r) {
+    var delen = delenVan(doc).map(function (d) {
+      // Structuur (titels) niet voor de grote landelijke regelingen: die boom is megabytes.
+      var groot = d === doc && groep === 'rijk';
+      var structuur = (d.bron_type === 'ow' && !groot) ? haalBoom(d.bron_id) : Promise.resolve(null);
+      return Promise.all([analyseer(d), structuur]).then(function (r) { return { a: r[0], boom: r[1] }; });
+    });
+    Promise.all(delen).then(function (r) {
       if (nr !== staat.volgnr) return;
       leeg(body);
-      toonArtikelen(r[0], r[1], body);
+      toonArtikelen(r, body);
     }).catch(function (e) {
       if (nr !== staat.volgnr) return;
       leeg(body);
@@ -499,8 +565,10 @@
     return bomen[expr];
   }
 
-  function toonArtikelen(a, boom, body) {
-    if (!a.artikelen.length) {
+  /** delen: [{a, boom}] — aanvullende regels eerst, hoofdregeling als laatste. */
+  function toonArtikelen(delen, body) {
+    var a = voegSamen(delen.map(function (d) { return d.a; }));
+    if (!a.totaal) {
       body.appendChild(el('p', { class: 'leeg-melding', text: 'Geen artikelen gevonden voor dit punt.' }));
       return;
     }
@@ -529,25 +597,48 @@
         });
         rij.appendChild(k);
       });
-      var ingedeeld = a.artikelen.length - a.nietIngedeeld;
+      var ingedeeld = a.totaal - a.nietIngedeeld;
       body.appendChild(el('div', { class: 'filter' }, [
         rij,
         el('span', { class: 'filter-uitleg', text:
-          'Onderwerpindeling van het register · ' + nl(ingedeeld) + ' van ' + nl(a.artikelen.length) + ' artikelen ingedeeld' })
+          'Onderwerpindeling van het register · ' + nl(ingedeeld) + ' van ' + nl(a.totaal) + ' artikelen ingedeeld' })
       ]));
     }
 
     var lijst = el('div', { class: 'artikelen' });
     body.appendChild(lijst);
+    var meerDelen = delen.length > 1;
 
-    if (a.doc.bron_type === 'ow') {
-      var register = 'https://omgevingsdocumentenregister.nl/document/' + String(a.doc.bron_id).replace(/^\//, '');
-      body.appendChild(el('a', { class: 'art-voet', href: register }, ['Het hele document in het register']));
+    delen.forEach(function (deel, i) {
+      var d = deel.a.doc, hoofd = i === delen.length - 1;
+      var doel = lijst;
+      if (meerDelen) {
+        var register = 'https://omgevingsdocumentenregister.nl/document/' + String(d.bron_id).replace(/^\//, '');
+        doel = el('div', { class: 'deel' + (hoofd ? '' : ' deel-aanvullend') });
+        doel.appendChild(el('div', { class: 'deel-kop' }, [
+          el('span', { class: 'label', text: hoofd ? 'Hoofdregeling' : 'Aanvullende regels · voorbescherming' }),
+          el('a', { class: 'deel-titel', href: register, text: d.regeling }),
+          hoofd ? null : el('span', { class: 'deel-uitleg', text:
+            'Tijdelijke regels uit een voorbereidingsbesluit' +
+            (d.bestuurslaag ? ' van ' + (d.bestuurslaag === 'rijk' ? 'het Rijk' : 'de ' + d.bestuurslaag) : '') +
+            '. Ze gelden nu al, naast de hoofdregeling.' })
+        ]));
+        lijst.appendChild(doel);
+      }
+      if (!deel.a.artikelen.length) {
+        doel.appendChild(el('p', { class: 'leeg-melding', text: 'Geen artikelen gevonden voor dit punt.' }));
+        return;
+      }
+      var dichtklappen = deel.a.artikelen.length > MAX_ART_OPEN_RENDER;
+      var boomGebruikt = deel.boom && vulViaBoom(deel.a, deel.boom, doel, artEls, dichtklappen);
+      if (!boomGebruikt) vulPerHoofdstuk(deel.a, doel, artEls, dichtklappen);
+    });
+
+    var hoofdDoc = delen[delen.length - 1].a.doc;
+    if (hoofdDoc.bron_type === 'ow') {
+      var link = 'https://omgevingsdocumentenregister.nl/document/' + String(hoofdDoc.bron_id).replace(/^\//, '');
+      body.appendChild(el('a', { class: 'art-voet', href: link }, ['Het hele document in het register']));
     }
-
-    var dichtklappen = a.artikelen.length > MAX_ART_OPEN_RENDER;
-    var boomGebruikt = boom && vulViaBoom(a, boom, lijst, artEls, dichtklappen);
-    if (!boomGebruikt) vulPerHoofdstuk(a, lijst, artEls, dichtklappen);
 
     function pasFilterToe() {
       var filterAan = Object.keys(actief).length > 0;
@@ -556,8 +647,8 @@
         x.el.hidden = filterAan && !actief[cat];
       });
       // Secties zonder zichtbaar artikel verbergen.
-      Array.prototype.slice.call(lijst.querySelectorAll('.sectie')).reverse().forEach(function (s) {
-        s.hidden = !s.querySelector('.art:not([hidden])');
+      Array.prototype.slice.call(lijst.querySelectorAll('.sectie, .deel')).reverse().forEach(function (s) {
+        s.hidden = filterAan && !s.querySelector('.art:not([hidden])');
       });
     }
   }

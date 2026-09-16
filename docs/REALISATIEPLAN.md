@@ -38,8 +38,9 @@ bezoekersonderwerpen komt terug in fase 6.
 - `/v1/viewer/regeling/{expr}/boom` levert per lid al de annotaties (activiteiten,
   gebiedsaanwijzingen, normwaarden). Het infopaneel van fase 9 heeft daardoor mogelijk
   **geen nieuw OCD-endpoint** nodig. ⚠️ Te verifiëren of dat voor alle regelingen gevuld is.
-- De documentenlijst per locatie bevat al voorbereidingsbesluiten en voorbeschermingsregels
-  (gezien bij Amsterdam en Groningen). Zie open besluit 3.
+- Voorbeschermingsregels kwamen als losse documenten binnen; ze hangen nu onder hun document
+  (getest bij Amsterdam, Groningen, Ede, Utrecht, Valkenburg: geen enkele meer los). Artikelen
+  daarvan die niet in de `/boom` van het voorbereidingsbesluit terugkomen, staan onder "Overig".
 - De Limburgse omgevingsverordening heet in `regelmix` "Wijzigingsverordening 2024 Om" — het
   opschrift van de geconsolideerde regeling lijkt niet te kloppen. ⚠️ Te verifiëren in OCD
   (`p2p.regeling.opschrift`), niet in RoM oplossen.
@@ -318,19 +319,20 @@ de lijst en de kaart, met drie tabbladen.
 ## Open besluiten
 
 Besloten op 2026-09-16: subdomein `rom.omgevingsdocumentenregister.nl`; thema-as A (de indeling
-van het register); volgorde van fase 5 t/m 9.
+van het register); volgorde van fase 5 t/m 9; voorbeschermingsregels tonen **bij het
+omgevingsplan of de omgevingsverordening waar ze bij horen**, als "Aanvullende regels", zoals het
+DSO dat doet (gebouwd: `koppelAanvullend` in `public/app.js`). Bij kaal documenttype
+"Voorbeschermingsregels" beslissen titel en bestuurslaag; ⚠️ een provinciaal voorbereidingsbesluit
+kan ook een omgevingsplan aanvullen, daarom staat de vaststeller erbij.
 
 1. **Waar staat `stijl.css` canoniek?** (fase 5) Advies: in het **register**, want dat is de
    koepel. RoM houdt een kopie met de kopregel "canoniek in omgevingsdocumentenregister.nl",
    net als bij `ocd-regeltekst.js`. Niet cross-origin laden: dat koppelt de caches en de CSP
    van twee sites.
 2. **Geolocatie toestaan** ("mijn locatie")? Nu staat `geolocation=()` in beide sites.
-3. **Scope-grens:** het register toont alleen de geldende situatie; RoM toont nu al
-   voorbereidingsbesluiten en voorbeschermingsregels. Zo laten (en als aparte groep tonen), of
-   gelijktrekken met het register?
-4. **Bezoekersonderwerpen** (fase 6): welke 5–8 onderwerpen, en welke categorieën vallen eronder?
+3. **Bezoekersonderwerpen** (fase 6): welke 5–8 onderwerpen, en welke categorieën vallen eronder?
    Eerst een voorstel op basis van de tellingen op een paar locaties, dan kiezen.
-5. **Toelichting** (fase 9): alleen bouwen als de koppeling betrouwbaar blijkt.
+4. **Toelichting** (fase 9): alleen bouwen als de koppeling betrouwbaar blijkt.
 
 ## Bekende valkuilen
 

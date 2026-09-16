@@ -153,3 +153,14 @@ details.sectie > summary { cursor: pointer; list-style-position: outside; }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) .kaart .onderkaart canvas { filter: invert(.9) hue-rotate(180deg) brightness(.95) contrast(.9); }
 }
+
+/* Aanvullende regels (voorbescherming) binnen het document waar ze bij horen */
+.tag-aanvullend { color: var(--at); border-color: color-mix(in oklch, var(--at) 40%, var(--lijn)); text-transform: none; font-family: var(--sans); font-size: 11.5px; }
+.deel { display: flex; flex-direction: column; }
+.deel + .deel { margin-top: 14px; }
+.deel-kop { display: flex; flex-direction: column; gap: 2px; padding: 10px 12px; margin: 4px 0 2px; background: var(--grond); border-radius: 3px; }
+.deel-aanvullend > .deel-kop { background: var(--at-bg); }
+.deel-aanvullend > .deel-kop .label { color: var(--at); }
+.deel-titel { font-family: var(--serif); font-size: 15.5px; font-weight: 600; color: var(--inkt); text-decoration: none; }
+.deel-titel:hover { color: var(--acc); text-decoration: underline; }
+.deel-uitleg { font-size: 12.5px; color: var(--inkt-2); }
