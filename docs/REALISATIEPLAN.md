@@ -16,11 +16,16 @@ Bijgewerkt 2026-09-16. **Live op https://rom.omgevingsdocumentenregister.nl** (P
 | 2 · Echte kaart | ✅ OpenLayers 10.10 gevendord, RD zonder proj4, PDOK BRT grijs, perceel + punt, klik = nieuwe locatie | Werkingsgebieden → fase 8 |
 | 3 · Elke locatie, live | ✅ PDOK suggest/lookup/reverse (adres én perceel), proxy-whitelist, documenten in vier groepen (lokaal · Wro · beleid · Rijk), structuur uit `/boom`, leden via `ocd-regeltekst`, Juridisch/Begrijpelijk, locatie in de URL | Handmatige toets tegen Regels op de kaart |
 | 4 · Onderwerp-chips | ✅ Indeling van het register (`/onderwerpen`) ∩ artikelen op het punt, client-side, zonder OCD-wijziging. Chips per document, filter binnen een document, "niet ingedeeld" zichtbaar | Onderwerpen óver documenten heen, met iconen → fase 6 |
-| 5 · Register naar stijl C | ⬜ | |
+| 5 · Register naar stijl C | ✅ Live (`omgevingsdocumentenregister.nl` commits `a9e452d`, `5baa276`). `stijl.css` canoniek in het register; RoM verhuisd naar `/regels-op-maat/`, subdomein stuurt door (301). Onderweg: CSP blokkeerde inline styles (staafjes en GIO-plaat zonder afmetingen) — opgelost | Vragenbomen-overzicht: status en naam staan omgedraaid (bestond al) |
 | 6 · Onderwerpen op deze locatie, met iconen | ⬜ | |
 | 7 · De vraag | ⬜ | |
 | 8 · Werkingsgebied bij het artikel | ⬜ | |
 | 9 · Infopaneel | ⬜ | |
+
+**Correctie 2026-09-16 (`adb1dbb`):** leden werden via hun wId aan een artikel gekoppeld
+(`…__art_x`). wId's zonder dat segment (Amsterdam: `gm0363_<hash>__para_2`) telden daardoor elk
+als los artikel zonder onderwerp: 1.182 "artikelen", 22% ingedeeld, waar het 669 en 70% zijn.
+De koppeling loopt nu via de documentboom (lid → omhullend Artikel).
 
 **Volgorde vanaf fase 5** is gekozen door de gebruiker op 2026-09-16: eerst het register in
 dezelfde stijl, dan de onderwerpen met iconen, dan de vraag, dan het werkingsgebied, dan het
