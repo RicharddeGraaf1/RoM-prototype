@@ -17,7 +17,7 @@ Bijgewerkt 2026-09-16. **Live op https://rom.omgevingsdocumentenregister.nl** (P
 | 3 · Elke locatie, live | ✅ PDOK suggest/lookup/reverse (adres én perceel), proxy-whitelist, documenten in vier groepen (lokaal · Wro · beleid · Rijk), structuur uit `/boom`, leden via `ocd-regeltekst`, Juridisch/Begrijpelijk, locatie in de URL | Handmatige toets tegen Regels op de kaart |
 | 4 · Onderwerp-chips | ✅ Indeling van het register (`/onderwerpen`) ∩ artikelen op het punt, client-side, zonder OCD-wijziging. Chips per document, filter binnen een document, "niet ingedeeld" zichtbaar | Onderwerpen óver documenten heen, met iconen → fase 6 |
 | 5 · Register naar stijl C | ✅ Live (`omgevingsdocumentenregister.nl` commits `a9e452d`, `5baa276`). `stijl.css` canoniek in het register; RoM verhuisd naar `/regels-op-maat/`, subdomein stuurt door (301). Onderweg: CSP blokkeerde inline styles (staafjes en GIO-plaat zonder afmetingen) — opgelost | Vragenbomen-overzicht: status en naam staan omgedraaid (bestond al) |
-| 6 · Onderwerpen op deze locatie, met iconen | ⬜ | |
+| 6 · Onderwerpen op deze locatie, met iconen | ✅ Live (register `9b067ad`). Tussenscherm met tegels (alleen onderwerpen die op de locatie voorkomen), 10 bezoekersonderwerpen + 3 kleine, eigen lijniconen (lijndikte 1,25, ontwerp in het canvas "Onderwerp-iconen Regels op maat"), klik = gefilterd resultaat over documenten, weergaven in de URL. Geen OCD-werk | Tussenscherm laadt koud 5–6 s (documentbomen); warm 2–3 s. Progressief tonen kan later |
 | 7 · De vraag | ⬜ | |
 | 8 · Werkingsgebied bij het artikel | ⬜ | |
 | 9 · Infopaneel | ⬜ | |
@@ -324,7 +324,7 @@ de lijst en de kaart, met drie tabbladen.
 ## Open besluiten
 
 Besloten op 2026-09-16: subdomein `rom.omgevingsdocumentenregister.nl`; thema-as A (de indeling
-van het register); volgorde van fase 5 t/m 9; voorbeschermingsregels tonen **bij het
+van het register); volgorde van fase 5 t/m 9; bezoekersonderwerpen en iconen (2026-09-17: water gesplitst, geur bij geluid, energie bij bedrijven, lijndikte het dunst); voorbeschermingsregels tonen **bij het
 omgevingsplan of de omgevingsverordening waar ze bij horen**, als "Aanvullende regels", zoals het
 DSO dat doet (gebouwd: `koppelAanvullend` in `public/app.js`). Bij kaal documenttype
 "Voorbeschermingsregels" beslissen titel en bestuurslaag; ⚠️ een provinciaal voorbereidingsbesluit
@@ -335,9 +335,7 @@ kan ook een omgevingsplan aanvullen, daarom staat de vaststeller erbij.
    net als bij `ocd-regeltekst.js`. Niet cross-origin laden: dat koppelt de caches en de CSP
    van twee sites.
 2. **Geolocatie toestaan** ("mijn locatie")? Nu staat `geolocation=()` in beide sites.
-3. **Bezoekersonderwerpen** (fase 6): welke 5–8 onderwerpen, en welke categorieën vallen eronder?
-   Eerst een voorstel op basis van de tellingen op een paar locaties, dan kiezen.
-4. **Toelichting** (fase 9): alleen bouwen als de koppeling betrouwbaar blijkt.
+3. **Toelichting** (fase 9): alleen bouwen als de koppeling betrouwbaar blijkt.
 
 ## Bekende valkuilen
 
