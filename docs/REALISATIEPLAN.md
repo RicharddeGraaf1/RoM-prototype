@@ -18,7 +18,7 @@ Bijgewerkt 2026-09-16. **Live op https://rom.omgevingsdocumentenregister.nl** (P
 | 4 · Onderwerp-chips | ✅ Indeling van het register (`/onderwerpen`) ∩ artikelen op het punt, client-side, zonder OCD-wijziging. Chips per document, filter binnen een document, "niet ingedeeld" zichtbaar | Onderwerpen óver documenten heen, met iconen → fase 6 |
 | 5 · Register naar stijl C | ✅ Live (`omgevingsdocumentenregister.nl` commits `a9e452d`, `5baa276`). `stijl.css` canoniek in het register; RoM verhuisd naar `/regels-op-maat/`, subdomein stuurt door (301). Onderweg: CSP blokkeerde inline styles (staafjes en GIO-plaat zonder afmetingen) — opgelost | Vragenbomen-overzicht: status en naam staan omgedraaid (bestond al) |
 | 6 · Onderwerpen op deze locatie, met iconen | ✅ Live (register `9b067ad`). Tussenscherm met tegels (alleen onderwerpen die op de locatie voorkomen), 10 bezoekersonderwerpen + 3 kleine, eigen lijniconen (lijndikte 1,25, ontwerp in het canvas "Onderwerp-iconen Regels op maat"), klik = gefilterd resultaat over documenten, weergaven in de URL. Geen OCD-werk | Tussenscherm laadt koud 5–6 s (documentbomen); warm 2–3 s. Progressief tonen kan later |
-| 7 · De vraag | ⬜ | |
+| 7 · De vraag | ✅ Live (register `cf1c73c`/`5aee432`), **zonder taalmodel**: gebruikersbesluit 2026-09-17 is alleen de gevonden regels tonen. Mechaniek van de AI-modus van de OCD-viewer via `POST /v1/regelteksten-bij-vraag` (SKOS-begrippen → activiteit-join op het punt → tekst-fallback, gewogen score). Vraagveld boven de tegels, feed met begrippen- en regels-stap, chips aan/uit + opnieuw zoeken zonder term, resultaten op relevantie (eerst 10, dan Toon meer), schakelaar Per document, tekst via `/v1/viewer/teksten` | Normvragen ("hoe hoog mag ik bouwen?") geven 0 treffers: SKOS is blind op de norm-as. Embeddings (`/v1/semantisch`) zijn de kandidaat-oplossing en staan nog open |
 | 8 · Werkingsgebied bij het artikel | ⬜ | |
 | 9 · Infopaneel | ⬜ | |
 
@@ -260,7 +260,7 @@ altijd terug naar het tussenscherm; het huidige overzicht met alle documenten bl
 kloppen met de chips op de documentkaarten, en een klik een gefilterd resultaat over meerdere
 documenten geeft.
 
-### Fase 7 — De vraag · groot
+### Fase 7 — De vraag · groot (uitgevoerd zonder stap 2)
 
 **Wat je ziet:** in het tussenscherm typ je "mag ik een aanbouw bouwen?". Het resultaat heet
 **"Gevonden voor uw vraag"**: alleen de documenten en artikelen die erover gaan, de meest
